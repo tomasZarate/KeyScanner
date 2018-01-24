@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">KeyScanner</string>
     <string name="about">About</string>
-    <string name="wifiSwitch">Switch</string>
+    <string name="wifiSwitch">Wifi On/Off</string>
 </resources>
