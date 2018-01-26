@@ -6,7 +6,8 @@
     <color name="background_material_dark">#dadada</color>
     <color name="primary_material_dark">#03a192</color>
     <color name="primary_dark_material_dark">#393939</color>
-    <color name="miColorGris">#006ea2</color>
-    <color name="miColorVerde">#69f0ae</color>
-    <color name="miColorPrimaryDark">#006b9b</color>
+    <color name="miColorGris">#dcffffff</color>
+    <color name="miColorVerde">#009688</color>
+    <color name="miColorPrimaryDark">#00796b</color>
+    <color name="miAccent">#616161</color>
 </resources>
