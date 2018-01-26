@@ -6,7 +6,7 @@
 
     <item
         android:id="@+id/action_wifi"
-        android:icon="@drawable/signal_wifi_4"
+        android:icon="@drawable/signal_wifi"
         android:title=""
         app:showAsAction="ifRoom"/>
 

@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
                     itemWifi.setIcon(R.drawable.signal_wifi_off);
                 }
                 else{
-                    itemWifi.setIcon(R.drawable.signal_wifi_4);
+                    itemWifi.setIcon(R.drawable.signal_wifi);
                 }
                 return true;
             case R.id.action_about:
