@@ -9,8 +9,7 @@ public class WifiScanReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Toast.makeText(context,"Scan completed", Toast.LENGTH_LONG).show();
-
+            
         }
 
 }

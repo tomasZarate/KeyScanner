@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     protected Toolbar myToolbar;
-    protected MenuItem itemWifi;
     protected Button btn;
     protected ListView lvRedes;
     protected ArrayList<String> lista;
@@ -69,25 +70,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        itemWifi = menu.findItem(R.id.action_wifi);
-        if(!wifiManager.isWifiEnabled()){
-            itemWifi.setIcon(R.drawable.signal_wifi_off);
-        }
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_wifi:
-                wifiManager.setWifiEnabled(!wifiManager.isWifiEnabled());
-                if(wifiManager.isWifiEnabled()){
-                    itemWifi.setIcon(R.drawable.signal_wifi_off);
-                }
-                else{
-                    itemWifi.setIcon(R.drawable.signal_wifi);
-                }
-                return true;
             case R.id.action_about:
                 // User chose the "About" item, show the app settings UI...
                 Intent intent = new Intent(this, AboutActivity.class);
@@ -111,16 +99,23 @@ public class MainActivity extends AppCompatActivity {
 
         if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0x12345);
-
         }
         if (!wifiManager.isWifiEnabled() && wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLING) {
             wifiManager.setWifiEnabled(true);
         }
+
+        LocationManager lm= (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+
+        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER))
+            Toast.makeText(getApplicationContext(),"Por favor, active la ubicacion", Toast.LENGTH_LONG).show();
         if(wifiManager.startScan()){
             resultados= wifiManager.getScanResults();
         }
         else
-            resultados=new ArrayList<ScanResult>();
+            resultados= new ArrayList<>();
+
+
+
         return resultados;
     }
 
