@@ -8,6 +8,12 @@
     <color name="primary_dark_material_dark">#393939</color>
     <color name="miColorGris">#dcffffff</color>
     <color name="miColorVerde">#009688</color>
-    <color name="miColorPrimaryDark">#00796b</color>
+    <color name="miColorPrimaryDark">#000a12</color>
     <color name="miAccent">#616161</color>
+    <color name="miColoPrmiario">#263238</color>
+    <color name="miTextColor">#fafafa</color>
+    <color name="miColorSecondary">#32cb00</color>
+    <color name="miColorPrmiario">#263238</color>
+    <color name="miColorPrimiario">#263238</color>
+    <color name="miColorPrimario">#263238</color>
 </resources>
