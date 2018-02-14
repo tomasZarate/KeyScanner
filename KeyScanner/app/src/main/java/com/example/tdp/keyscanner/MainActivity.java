@@ -51,9 +51,13 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int redes=getWifi();
-                lista.add(""+redes);
-                adaptador.notifyDataSetChanged();
+                List<ScanResult> redes=getWifi();
+                for(ScanResult e: redes){
+                    lista.add(""+e.SSID);
+                    adaptador.notifyDataSetChanged();
+                }
+
+
             }
         });
 
@@ -98,9 +102,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private int getWifi() {
+    private List<ScanResult> getWifi() {
 
-        int resultado;
+        List<ScanResult> resultados;
         IntentFilter scanIntent = new IntentFilter();
         scanIntent.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
         getApplicationContext().registerReceiver(mWifiScanResultReceiver, scanIntent);
@@ -113,12 +117,11 @@ public class MainActivity extends AppCompatActivity {
             wifiManager.setWifiEnabled(true);
         }
         if(wifiManager.startScan()){
-            List<ScanResult> resultados= wifiManager.getScanResults();
-            resultado= resultados.size();
+            resultados= wifiManager.getScanResults();
         }
         else
-            resultado=21;
-        return resultado;
+            resultados=new ArrayList<ScanResult>();
+        return resultados;
     }
 
     @Override
