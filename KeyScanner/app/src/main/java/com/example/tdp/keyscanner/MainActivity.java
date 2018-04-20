@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 List<ScanResult> redes=getWifi();
+                lista.clear();
+                adaptador.notifyDataSetChanged();
                 for(ScanResult e: redes){
                     lista.add(""+e.SSID);
                     adaptador.notifyDataSetChanged();

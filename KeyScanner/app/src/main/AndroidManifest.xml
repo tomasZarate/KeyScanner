@@ -37,11 +37,16 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+        <activity android:name=".OcrCaptureActivity"
+        android:label="Read Text"/>
 
         <receiver
             android:name=".WifiScanReceiver"
             android:enabled="true"
             android:exported="true"
             android:permission="" />
+
+
     </application>
+
 </manifest>
