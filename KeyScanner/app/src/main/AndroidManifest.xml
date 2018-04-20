@@ -37,8 +37,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".OcrCaptureActivity"
-        android:label="Read Text"/>
+        <activity
+            android:name=".OCR.OcrCaptureActivity"
+            android:label="Read Text" />
 
         <receiver
             android:name=".WifiScanReceiver"
@@ -46,7 +47,12 @@
             android:exported="true"
             android:permission="" />
 
-
+        <activity android:name=".RedesEscaneadasActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
+        </activity>
+        <activity android:name=".RedesGuardasActivity"></activity>
     </application>
 
 </manifest>

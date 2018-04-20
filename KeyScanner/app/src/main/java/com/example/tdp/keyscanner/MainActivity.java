@@ -1,40 +1,24 @@
 package com.example.tdp.keyscanner;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.location.LocationManager;
-import android.net.wifi.ScanResult;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.example.tdp.keyscanner.OCR.OcrCaptureActivity;
+import com.google.android.gms.common.api.CommonStatusCodes;
 
 public class MainActivity extends AppCompatActivity {
 
-
+    private static final int RC_OCR_CAPTURE = 9003;
     protected Toolbar myToolbar;
     protected Button btn;
-    protected ListView lvRedes;
-    protected ArrayList<String> lista;
-    protected ArrayAdapter<String> adaptador;
-    //Wifi
-    protected WifiManager wifiManager;
-    protected int cantRedes;
-    protected WifiScanReceiver mWifiScanResultReceiver;
-
+    protected Button btnOCR;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,29 +27,40 @@ public class MainActivity extends AppCompatActivity {
         myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        lvRedes = findViewById(R.id.listView);
-        lista= new ArrayList<>();
-        adaptador= new ArrayAdapter<>(getApplicationContext(), R.layout.texto_negro, lista);
-        lvRedes.setAdapter(adaptador);
-        cantRedes=0;
         btn=findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<ScanResult> redes=getWifi();
-                lista.clear();
-                adaptador.notifyDataSetChanged();
-                for(ScanResult e: redes){
-                    lista.add(""+e.SSID);
-                    adaptador.notifyDataSetChanged();
-                }
 
+                Intent intent=new Intent(getApplicationContext(),RedesEscaneadasActivity.class);
+                startActivity(intent);
 
             }
         });
 
-        wifiManager = (WifiManager) this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        mWifiScanResultReceiver= new WifiScanReceiver();
+        btnOCR=findViewById(R.id.botonOCR);
+        btnOCR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), RedesGuardasActivity.class);
+
+            }
+        });
+
+        //Usar mas adelante en ocr
+
+        /*btnOCR=findViewById(R.id.botonOCR);
+        btnOCR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), OcrCaptureActivity.class);
+                intent.putExtra(OcrCaptureActivity.AutoFocus, true);
+                intent.putExtra(OcrCaptureActivity.UseFlash, false);
+
+                startActivityForResult(intent, RC_OCR_CAPTURE);
+            }
+        });*/
+
     }
 
     @Override
@@ -92,44 +87,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private List<ScanResult> getWifi() {
-
-        List<ScanResult> resultados;
-        IntentFilter scanIntent = new IntentFilter();
-        scanIntent.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-        getApplicationContext().registerReceiver(mWifiScanResultReceiver, scanIntent);
-
-        if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0x12345);
-        }
-        if (!wifiManager.isWifiEnabled() && wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLING) {
-            wifiManager.setWifiEnabled(true);
-        }
-
-        LocationManager lm= (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-
-        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER))
-            Toast.makeText(getApplicationContext(),"Por favor, active la ubicacion", Toast.LENGTH_LONG).show();
-        if(wifiManager.startScan()){
-            resultados= wifiManager.getScanResults();
-        }
-        else
-            resultados= new ArrayList<>();
-
-
-
-        return resultados;
-    }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        if (requestCode == 0x12345) {
-            for (int grantResult : grantResults) {
-                if (grantResult != PackageManager.PERMISSION_GRANTED) {
-                    return;
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == RC_OCR_CAPTURE) {
+            if (resultCode == CommonStatusCodes.SUCCESS) {
+                if (data != null) {
+                    String text = data.getStringExtra(OcrCaptureActivity.TextBlockObject);
+                    //statusMessage.setText(R.string.ocr_success);
+                    //textValue.setText(text);
+                    Log.d("MainActivity", "Text read: " + text);
+                } else {
+                    //statusMessage.setText(R.string.ocr_failure);
+                    Log.d("MainActivity", "No Text captured, intent data is null");
                 }
+            } else {
+               // statusMessage.setText(String.format(getString(R.string.ocr_error), CommonStatusCodes.getStatusCodeString(resultCode)));
             }
-            getWifi();
+        }
+        else {
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
 }
