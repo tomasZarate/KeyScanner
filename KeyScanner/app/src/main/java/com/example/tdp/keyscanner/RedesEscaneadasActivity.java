@@ -21,7 +21,6 @@ import java.util.List;
 
 public class RedesEscaneadasActivity extends AppCompatActivity {
 
-    protected Toolbar myToolbar;
     protected Button btn;
     protected ListView lvRedes;
     protected ArrayList<String> lista;
@@ -36,8 +35,8 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_redes_escaneadas);
 
-        myToolbar = findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
