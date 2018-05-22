@@ -1,12 +1,15 @@
 package com.example.tdp.keyscanner;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -42,7 +45,8 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
         lvRedes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                Toast.makeText(getApplicationContext(), "Click en la posición "  + position, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "Click en la posición "  + position, Toast.LENGTH_SHORT).show();
+                seleccionarEntrada();
             }
         });
         lista = new ArrayList<ElementoRed>();
@@ -91,8 +95,6 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
         else
             resultados= new ArrayList<>();
 
-
-
         return resultados;
     }
 
@@ -107,5 +109,18 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
             getWifi();
         }
     }
+
+    public void seleccionarEntrada(){
+        String [] items={"Escanear imagen","Escanear QR","Ingresar manualmante"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Titulo");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Do anything you want here
+            }
+        });
+        builder.create().show();
+    }
+
 
 }
