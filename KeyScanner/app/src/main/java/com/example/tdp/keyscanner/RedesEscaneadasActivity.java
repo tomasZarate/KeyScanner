@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -23,11 +23,10 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
 
     protected Button btn;
     protected ListView lvRedes;
-    protected ArrayList<String> lista;
-    protected ArrayAdapter<String> adaptador;
+    protected ArrayList<ElementoRed> lista;
+    protected WifiAdapter adaptador;
     //Wifi
     protected WifiManager wifiManager;
-    protected int cantRedes;
     protected WifiScanReceiver mWifiScanResultReceiver;
 
     @Override
@@ -39,13 +38,17 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-
         lvRedes = findViewById(R.id.listView);
-        lista= new ArrayList<>();
-        adaptador= new ArrayAdapter<>(getApplicationContext(), R.layout.texto_negro, lista);
+        lvRedes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                Toast.makeText(getApplicationContext(), "Click en la posición "  + position, Toast.LENGTH_SHORT).show();
+            }
+        });
+        lista = new ArrayList<ElementoRed>();
+
+        adaptador = new WifiAdapter(getApplicationContext(), lista);
         lvRedes.setAdapter(adaptador);
-        cantRedes=0;
         btn=findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +57,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
                 lista.clear();
                 adaptador.notifyDataSetChanged();
                 for(ScanResult e: redes){
-                    lista.add(""+e.SSID);
+                    lista.add(new ElementoRed(e.SSID,e.level+""));
                     adaptador.notifyDataSetChanged();
                 }
 

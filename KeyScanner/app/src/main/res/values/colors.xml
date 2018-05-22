@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="background_material_dark">#dadada</color>
@@ -12,7 +12,7 @@
     <color name="miAccent">#616161</color>
     <color name="miColoPrmiario">#263238</color>
     <color name="miTextColor">#fafafa</color>
-    <color name="miColorSecondary">#32cb00</color>
+    <color name="miColorSecondary">#3fff00</color>
     <color name="miColorPrmiario">#263238</color>
     <color name="miColorPrimiario">#263238</color>
     <color name="miColorPrimario">#263238</color>

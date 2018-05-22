@@ -14,8 +14,8 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
         android:text="Escanear redes"
-        android:theme="@style/miTema"
         android:textColor="@android:color/background_light"
+        android:theme="@style/miTema"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -35,8 +35,8 @@
 
     <ListView
         android:id="@+id/listView"
-        android:layout_width="0dp"
-        android:layout_height="436dp"
+        android:layout_width="wrap_content"
+        android:layout_height="399dp"
         android:layout_marginBottom="11dp"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintLeft_toLeftOf="parent"
