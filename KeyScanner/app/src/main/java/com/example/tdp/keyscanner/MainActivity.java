@@ -15,10 +15,10 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int RC_OCR_CAPTURE = 9003;
+    //private static final int RC_OCR_CAPTURE = 9003;
     protected Toolbar myToolbar;
     protected Button btn;
-    protected Button btnOCR;
+    protected Button btnRG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,29 +38,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btnOCR=findViewById(R.id.botonOCR);
-        btnOCR.setOnClickListener(new View.OnClickListener() {
+        btnRG=findViewById(R.id.botonOCR);
+        btnRG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), RedesGuardasActivity.class);
                 startActivity(intent);
             }
         });
-
-        //Usar mas adelante en ocr
-
-        /*btnOCR=findViewById(R.id.botonOCR);
-        btnOCR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), OcrCaptureActivity.class);
-                intent.putExtra(OcrCaptureActivity.AutoFocus, true);
-                intent.putExtra(OcrCaptureActivity.UseFlash, false);
-
-                startActivityForResult(intent, RC_OCR_CAPTURE);
-            }
-        });*/
-
     }
 
     @Override
@@ -83,30 +68,6 @@ public class MainActivity extends AppCompatActivity {
                 // Invoke the superclass to handle it.
                 return super.onOptionsItemSelected(item);
 
-
-        }
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == RC_OCR_CAPTURE) {
-            if (resultCode == CommonStatusCodes.SUCCESS) {
-                if (data != null) {
-                    String text = data.getStringExtra(OcrCaptureActivity.TextBlockObject);
-                    //statusMessage.setText(R.string.ocr_success);
-                    //textValue.setText(text);
-                    Log.d("MainActivity", "Text read: " + text);
-                } else {
-                    //statusMessage.setText(R.string.ocr_failure);
-                    Log.d("MainActivity", "No Text captured, intent data is null");
-                }
-            } else {
-               // statusMessage.setText(String.format(getString(R.string.ocr_error), CommonStatusCodes.getStatusCodeString(resultCode)));
-            }
-        }
-        else {
-            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
