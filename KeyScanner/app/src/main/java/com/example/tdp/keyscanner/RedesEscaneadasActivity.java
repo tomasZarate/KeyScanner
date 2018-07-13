@@ -157,7 +157,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
         switch(requestCode){
             case RC_OCR_CAPTURE:
                 if (resultCode == CommonStatusCodes.SUCCESS) {
-                    if (data != null) {
+                    if (data != null && redActual!=null) {
                         String text="Conexion exitosa";
                         String password = data.getStringExtra(OcrCaptureActivity.TextBlockObject);
                         //statusMessage.setText(R.string.ocr_success);
