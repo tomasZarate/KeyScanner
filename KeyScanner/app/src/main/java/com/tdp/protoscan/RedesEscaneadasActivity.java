@@ -1,7 +1,10 @@
 package com.tdp.protoscan;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,7 +33,7 @@ import com.google.android.gms.common.api.CommonStatusCodes;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RedesEscaneadasActivity extends AppCompatActivity {
+public class RedesEscaneadasActivity extends AppCompatActivity{
 
     protected Button btn;
     protected ListView lvRedes;
@@ -39,10 +42,12 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
     //Wifi
     protected WifiManager wifiManager;
     protected WifiScanReceiver mWifiScanResultReceiver;
+    protected String passwordActual;
 
     //Constantes
     private static final int RC_OCR_CAPTURE = 9003;
     private static final int RC_QR_CAPTURE = 9004;
+    private static final int RC_EDITOR = 9005;
     private String redActual;
 
     @Override
@@ -184,7 +189,10 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
                                         break;
                                     case 1:
                                         //Editar
-                                        crearDialogoEditor();
+
+                                        EditDialog editor= new EditDialog();
+                                        FragmentManager fr=RedesEscaneadasActivity.this.getFragmentManager();
+                                        editor.show(fr,"Editar Contraseña");
                                         break;
                                     case 2:
                                         //Volver a escanear
@@ -211,40 +219,6 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
         }
     }
 
-    private void crearDialogoEditor() {
-        String [] items={"Aceptar","Cancelar"};
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Editar");
-        
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-
-            }
-        });
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                // User clicked OK, so save the mSelectedItems results somewhere
-                // or return them to the component that opened the dialog
-
-            }
-        });
-        /*builder.setItems(items, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-
-                // Do anything you want here
-                //El parametro witch indica que opción se tocó (Usar un case)
-                switch(which){
-                    case 0:
-                        break;
-                    case 1:
-                        break;
-                }
-            }
-        });*/
-        builder.create().show();
-    }
 
 
     private boolean conectarRed(String ssid,String pass){
@@ -262,6 +236,56 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+
+    @SuppressLint("ValidFragment")
+    private class EditDialog extends DialogFragment {
+
+        private String password;
+
+        public EditDialog(){
+
+        }
+
+        public void setPassword(String pass){
+            password=pass;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle("Editar contraseña");
+            // Get the layout inflater
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            // Inflate and set the layout for the dialog
+
+            final EditText campoClave= getDialog().findViewById(R.id.dialog_edit);
+            // Pass null as the parent view because its going in the dialog layout
+            builder.setView(inflater.inflate(R.layout.dialog_edit, null))
+                    // Add action buttons
+                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            if (campoClave != null) {
+                                password=""+campoClave.getText();
+                            } else {
+                                Log.e("", "EditText not found!");
+                            }
+                            passwordActual=""+campoClave.getText();
+                            //devolver contraseña
+
+                        }
+                    })
+                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            EditDialog.this.getDialog().cancel();
+                        }
+                    });
+
+            return builder.create();
+        }
+
     }
 
 }
