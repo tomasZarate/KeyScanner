@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.tdp.keyscanner">
+    package="com.tdp.protoscan">
 
     <!-- Permisos -->
     <uses-permission android:name="android.permission.CAMERA" />
@@ -40,24 +40,26 @@
         <activity
             android:name=".OCR.OcrCaptureActivity"
             android:label="Read Text" />
-
         <activity android:name=".RedesEscaneadasActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
-        <activity android:name=".RedesGuardasActivity"
+        <activity
+            android:name=".RedesGuardasActivity"
             android:label="Redes Guardadas"
             android:parentActivityName=".MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
         <receiver
             android:name=".WifiScanReceiver"
             android:enabled="true"
             android:exported="true"
             android:permission="" />
+
     </application>
 
 </manifest>

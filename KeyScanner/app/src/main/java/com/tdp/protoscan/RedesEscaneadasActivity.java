@@ -1,6 +1,7 @@
-package com.example.tdp.keyscanner;
+package com.tdp.protoscan;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,13 +16,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.tdp.keyscanner.OCR.OcrCaptureActivity;
+import com.tdp.protoscan.OCR.OcrCaptureActivity;
 import com.google.android.gms.common.api.CommonStatusCodes;
 
 import java.util.ArrayList;
@@ -97,8 +100,9 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
 
         LocationManager lm= (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 
-        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER))
-            Toast.makeText(getApplicationContext(),"Por favor, active la ubicacion", Toast.LENGTH_LONG).show();
+        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            //Toast.makeText(getApplicationContext(),"Por favor, active la ubicacion", Toast.LENGTH_LONG).show();
+        }
         if(wifiManager.startScan()){
             resultados= wifiManager.getScanResults();
         }
@@ -123,7 +127,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
     private void seleccionarEntrada(){
         String [] items={"Escanear imagen","Escanear QR","Ingresar manualmante"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Titulo");
+        builder.setTitle("Tipo de conexion");
         builder.setItems(items, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // Do anything you want here
@@ -153,20 +157,44 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, final Intent data) {
         switch(requestCode){
             case RC_OCR_CAPTURE:
                 if (resultCode == CommonStatusCodes.SUCCESS) {
                     if (data != null && redActual!=null) {
-                        String text="Conexion exitosa";
-                        String password = data.getStringExtra(OcrCaptureActivity.TextBlockObject);
-                        //statusMessage.setText(R.string.ocr_success);
-                        //textValue.setText(text);
-                        Log.d("MainActivity", "Text read: " + text);
-                        if(conectarRed(redActual,password))
-                            Toast.makeText(getApplicationContext(),text, Toast.LENGTH_LONG).show();
-                        else
-                            Toast.makeText(getApplicationContext(),"Fallo la conexion", Toast.LENGTH_LONG).show();
+                        //Cuadro de texto
+                        final String password = data.getStringExtra(OcrCaptureActivity.TextBlockObject);
+                        String [] items={"Confirmar","Editar","Volver a escanear"};
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setTitle(password);
+                        builder.setItems(items, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                // Do anything you want here
+                                //El parametro witch indica que opción se tocó (Usar un case)
+                                switch(which){
+                                    case 0:
+                                        //Confirmar
+                                        //statusMessage.setText(R.string.ocr_success);
+                                        //textValue.setText(text);
+                                        if(conectarRed(redActual,password))
+                                            Toast.makeText(getApplicationContext(),"Conexion exitosa", Toast.LENGTH_LONG).show();
+                                        else
+                                            Toast.makeText(getApplicationContext(),"Fallo la conexion", Toast.LENGTH_LONG).show();
+                                        break;
+                                    case 1:
+                                        //Editar
+                                        crearDialogoEditor();
+                                        break;
+                                    case 2:
+                                        //Volver a escanear
+
+                                        break;
+                                }
+                            }
+                        });
+                        builder.create().show();
+
                     } else {
                         //statusMessage.setText(R.string.ocr_failure);
                         Log.d("MainActivity", "No Text captured, intent data is null");
@@ -182,6 +210,42 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
                 super.onActivityResult(requestCode, resultCode, data);
         }
     }
+
+    private void crearDialogoEditor() {
+        String [] items={"Aceptar","Cancelar"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Editar");
+        
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+
+            }
+        });
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked OK, so save the mSelectedItems results somewhere
+                // or return them to the component that opened the dialog
+
+            }
+        });
+        /*builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+                // Do anything you want here
+                //El parametro witch indica que opción se tocó (Usar un case)
+                switch(which){
+                    case 0:
+                        break;
+                    case 1:
+                        break;
+                }
+            }
+        });*/
+        builder.create().show();
+    }
+
 
     private boolean conectarRed(String ssid,String pass){
         WifiConfiguration conf = new WifiConfiguration();
@@ -199,4 +263,5 @@ public class RedesEscaneadasActivity extends AppCompatActivity {
         }
         return false;
     }
+
 }

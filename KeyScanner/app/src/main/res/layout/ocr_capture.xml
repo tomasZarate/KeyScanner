@@ -6,16 +6,16 @@
     android:layout_height="match_parent"
     android:keepScreenOn="true">
 
-    <com.example.tdp.keyscanner.camera.CameraSourcePreview
+    <com.tdp.protoscan.camera.CameraSourcePreview
         android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.tdp.keyscanner.camera.GraphicOverlay
+        <com.tdp.protoscan.camera.GraphicOverlay
             android:id="@+id/graphicOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
-    </com.example.tdp.keyscanner.camera.CameraSourcePreview>
+    </com.tdp.protoscan.camera.CameraSourcePreview>
 
 </LinearLayout>

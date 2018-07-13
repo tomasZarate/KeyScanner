@@ -1,4 +1,4 @@
-package com.example.tdp.keyscanner;
+package com.tdp.protoscan;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

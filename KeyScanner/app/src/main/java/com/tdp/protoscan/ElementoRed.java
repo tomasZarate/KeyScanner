@@ -1,4 +1,4 @@
-package com.example.tdp.keyscanner;
+package com.tdp.protoscan;
 
 /**
  * Created by tomi on 22/5/2018.

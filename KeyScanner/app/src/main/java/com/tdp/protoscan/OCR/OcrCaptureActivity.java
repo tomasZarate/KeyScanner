@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.tdp.keyscanner.OCR;
+package com.tdp.protoscan.OCR;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -38,13 +38,13 @@ import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.tdp.keyscanner.R;
+import com.tdp.protoscan.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.CommonStatusCodes;
-import com.example.tdp.keyscanner.camera.CameraSource;
-import com.example.tdp.keyscanner.camera.CameraSourcePreview;
-import com.example.tdp.keyscanner.camera.GraphicOverlay;
+import com.tdp.protoscan.camera.CameraSource;
+import com.tdp.protoscan.camera.CameraSourcePreview;
+import com.tdp.protoscan.camera.GraphicOverlay;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
 
