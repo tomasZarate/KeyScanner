@@ -60,6 +60,14 @@
             android:exported="true"
             android:permission="" />
 
+        <activity android:name=".EditarPasswordActivity"
+            android:label="Editar Contraseña"
+            android:parentActivityName=".RedesEscaneadasActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".RedesEscaneadasActivity" />
+
+        </activity>
     </application>
 
 </manifest>

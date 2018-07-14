@@ -42,7 +42,6 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
     //Wifi
     protected WifiManager wifiManager;
     protected WifiScanReceiver mWifiScanResultReceiver;
-    protected String passwordActual;
 
     //Constantes
     private static final int RC_OCR_CAPTURE = 9003;
@@ -189,10 +188,9 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
                                         break;
                                     case 1:
                                         //Editar
-
-                                        EditDialog editor= new EditDialog();
-                                        FragmentManager fr=RedesEscaneadasActivity.this.getFragmentManager();
-                                        editor.show(fr,"Editar Contraseña");
+                                        Intent intent=new Intent(getApplicationContext(),EditarPasswordActivity.class);
+                                        intent.putExtra("password",password);
+                                        startActivityForResult(intent,RC_EDITOR);
                                         break;
                                     case 2:
                                         //Volver a escanear
@@ -205,7 +203,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
 
                     } else {
                         //statusMessage.setText(R.string.ocr_failure);
-                        Log.d("MainActivity", "No Text captured, intent data is null");
+                        //Log.d("MainActivity", "No Text captured, intent data is null");
                     }
                 } else {
                     // statusMessage.setText(String.format(getString(R.string.ocr_error), CommonStatusCodes.getStatusCodeString(resultCode)));
@@ -213,6 +211,22 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
                 break;
             case RC_QR_CAPTURE:
                 //Completar
+                break;
+
+            case RC_EDITOR:
+
+                String resultado = data.getStringExtra("resultado");
+                System.out.println(resultado);
+                if ( resultado!= ""){
+                    if(conectarRed(redActual,resultado))
+                        Toast.makeText(getApplicationContext(),"Conexion exitosa", Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(getApplicationContext(),"Fallo la conexion", Toast.LENGTH_LONG).show();
+                    break;
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"No se conectó", Toast.LENGTH_LONG).show();
+                }
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);
@@ -238,54 +252,5 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
         return false;
     }
 
-
-    @SuppressLint("ValidFragment")
-    private class EditDialog extends DialogFragment {
-
-        private String password;
-
-        public EditDialog(){
-
-        }
-
-        public void setPassword(String pass){
-            password=pass;
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Editar contraseña");
-            // Get the layout inflater
-            LayoutInflater inflater = getActivity().getLayoutInflater();
-            // Inflate and set the layout for the dialog
-
-            final EditText campoClave= getDialog().findViewById(R.id.dialog_edit);
-            // Pass null as the parent view because its going in the dialog layout
-            builder.setView(inflater.inflate(R.layout.dialog_edit, null))
-                    // Add action buttons
-                    .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            if (campoClave != null) {
-                                password=""+campoClave.getText();
-                            } else {
-                                Log.e("", "EditText not found!");
-                            }
-                            passwordActual=""+campoClave.getText();
-                            //devolver contraseña
-
-                        }
-                    })
-                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            EditDialog.this.getDialog().cancel();
-                        }
-                    });
-
-            return builder.create();
-        }
-
-    }
 
 }
