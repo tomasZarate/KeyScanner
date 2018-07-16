@@ -145,12 +145,21 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
                         break;
                     case 2:
                         //Colocar manualmente la contraseña
+                        ingresarPassword("");
                         break;
                 }
             }
         });
         builder.create().show();
         //tomar el String para un metodo conectarRed(String password)
+    }
+
+    private void ingresarPassword(String input) {
+
+        Intent intent=new Intent(getApplicationContext(),EditarPasswordActivity.class);
+        intent.putExtra("password",input);
+        startActivityForResult(intent,RC_EDITOR);
+
     }
 
     private void lanzarOCR(){
@@ -188,13 +197,11 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
                                         break;
                                     case 1:
                                         //Editar
-                                        Intent intent=new Intent(getApplicationContext(),EditarPasswordActivity.class);
-                                        intent.putExtra("password",password);
-                                        startActivityForResult(intent,RC_EDITOR);
+                                        ingresarPassword(password);
                                         break;
                                     case 2:
                                         //Volver a escanear
-
+                                        lanzarOCR();
                                         break;
                                 }
                             }
