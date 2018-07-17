@@ -12,7 +12,7 @@
         android:layout_width="763dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="368dp"
-        android:background="?attr/colorPrimary"
+        android:background="@color/primaryColor"
         android:elevation="4dp"
         android:theme="@style/Toolbar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
 
     <ListView
         android:id="@+id/listViewRG"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="452dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"

@@ -97,7 +97,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
         mWifiScanResultReceiver= new WifiScanReceiver();
 
         mDbHelper = new WifiNetworksDB(getApplicationContext());
-        db = mDbHelper.getWritableDatabase();
+
 
     }
 
@@ -275,7 +275,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
 
     //Metodo para agregar a la base de datos
     public void agregar(String nombre, String pass){
-
+        db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE, nombre);
