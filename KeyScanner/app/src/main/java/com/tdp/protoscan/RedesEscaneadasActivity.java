@@ -5,6 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import android.widget.Toast;
 
 import com.tdp.protoscan.OCR.OcrCaptureActivity;
 import com.google.android.gms.common.api.CommonStatusCodes;
+import com.tdp.protoscan.database.WifiNetworkContract;
 import com.tdp.protoscan.database.WifiNetworksDB;
 
 import java.util.ArrayList;
@@ -263,11 +265,26 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
                 wifiManager.disconnect();
                 wifiManager.enableNetwork(i.networkId, true);
                 wifiManager.reconnect();
+                agregar(ssid, pass);
                 return true;
             }
         }
         return false;
     }
 
+
+    //Metodo para agregar a la base de datos
+    public void agregar(String nombre, String pass){
+
+        ContentValues values = new ContentValues();
+
+        values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE, nombre);
+        values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE, pass);
+
+        long Id = db.insert(WifiNetworkContract.FeedEntry.TABLE_NAME, null,values); //-1 si hubo error en insertar
+
+        db.close();
+
+    }
 
 }
