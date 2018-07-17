@@ -1,6 +1,8 @@
 package com.tdp.protoscan;
 
+import android.database.Cursor;
 import android.net.wifi.ScanResult;
+import android.provider.BaseColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.tdp.protoscan.database.WifiNetworkContract;
 import com.tdp.protoscan.database.WifiNetworksDB;
 
 import java.util.ArrayList;
@@ -52,6 +55,12 @@ public class RedesGuardasActivity extends AppCompatActivity {
     private void cargarRedes() {
         testearLista();
         //Cargar redes desde la base de datos
+
+        String[] projection = {
+                BaseColumns._ID,
+                WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE,
+                WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE
+        };
 
 
         List<ElementoRed> redes; //acá se carga lo tomado de la base de datos
