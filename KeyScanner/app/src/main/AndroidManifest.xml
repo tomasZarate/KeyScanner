@@ -11,7 +11,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
@@ -37,32 +36,27 @@
         <activity
             android:name=".OCR.OcrCaptureActivity"
             android:label="Read Text" />
-
-        <activity android:name=".RedesEscaneadasActivity"
+        <activity
+            android:name=".RedesEscaneadasActivity"
+            android:label="Escanear Redes"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/miTema"
-            android:label="Escanear Redes">
-
-        </activity>
-        <activity android:name=".RedesGuardasActivity"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/miTema"
-            android:label="Redes Guardadas"
-
-            >
-
-        </activity>
-        <activity android:name=".EditarPasswordActivity"
+            android:theme="@style/miTema"/>
+        <activity
+            android:name=".EditarPasswordActivity"
             android:label="Ingresar Contraseña"
             android:parentActivityName=".RedesEscaneadasActivity"
-            android:theme="@style/miTema">
-        </activity>
+            android:theme="@style/miTema"/>
+        <activity android:name=".RedesGuardadasActivity"
+            android:label="Redes Guardadas"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/miTema"/>
 
         <receiver
             android:name=".WifiScanReceiver"
             android:enabled="true"
             android:exported="true"
             android:permission="" />
+
 
     </application>
 

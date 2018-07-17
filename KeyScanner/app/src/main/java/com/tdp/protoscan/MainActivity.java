@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     //private static final int RC_OCR_CAPTURE = 9003;
     protected Toolbar myToolbar;
-    protected Button btn;
+    protected Button btnRE;
     protected Button btnRG;
 
     @Override
@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         myToolbar = findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
-        btn=findViewById(R.id.button);
-        btn.setOnClickListener(new View.OnClickListener() {
+        btnRE=findViewById(R.id.button);
+        btnRE.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         btnRG.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), RedesGuardasActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RedesGuardadasActivity.class);
                 startActivity(intent);
             }
         });
