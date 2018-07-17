@@ -281,7 +281,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
         values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE, nombre);
         values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE, pass);
 
-        long Id = db.insert(WifiNetworkContract.FeedEntry.TABLE_NAME, null,values); //-1 si hubo error en insertar
+        long id = db.insert(WifiNetworkContract.FeedEntry.TABLE_NAME, null,values); //-1 si hubo error en insertar
 
         db.close();
 
