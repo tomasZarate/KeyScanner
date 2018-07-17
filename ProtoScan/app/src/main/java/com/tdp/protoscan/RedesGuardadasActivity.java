@@ -46,14 +46,7 @@ public class RedesGuardadasActivity extends AppCompatActivity {
 
         mDbHelper = new WifiNetworksDB(getApplicationContext());
 
-        testearLista();
 
-    }
-
-    private void testearLista() {
-
-        lista.add(new ElementoRed("lalala","123"));
-        adaptador.notifyDataSetChanged();
 
     }
 
