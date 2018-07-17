@@ -232,19 +232,18 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
                 break;
 
             case RC_EDITOR:
-
-                String resultado = data.getStringExtra("resultado");
-                System.out.println(resultado);
-                if ( resultado!= ""){
-                    if(conectarRed(redActual,resultado))
-                        Toast.makeText(getApplicationContext(),"Conexion exitosa", Toast.LENGTH_LONG).show();
-                    else
-                        Toast.makeText(getApplicationContext(),"Fallo la conexion", Toast.LENGTH_LONG).show();
-                    break;
+                if(data!=null){
+                    String resultado = data.getStringExtra("resultado");
+                    if ( resultado!= ""){
+                        if(conectarRed(redActual,resultado))
+                            Toast.makeText(getApplicationContext(),"Conexion exitosa", Toast.LENGTH_LONG).show();
+                        else
+                            Toast.makeText(getApplicationContext(),"Fallo la conexion", Toast.LENGTH_LONG).show();
+                        break;
+                    }
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"No se conectó", Toast.LENGTH_LONG).show();
-                }
+                    Toast.makeText(getApplicationContext(),"No se conectó", Toast.LENGTH_LONG).show(); }
                 break;
             default:
                 super.onActivityResult(requestCode, resultCode, data);

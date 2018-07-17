@@ -33,25 +33,28 @@
             android:theme="@style/miTema">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
         </activity>
         <activity
             android:name=".OCR.OcrCaptureActivity"
             android:label="Read Text" />
-        <activity android:name=".RedesEscaneadasActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+
+        <activity android:name=".RedesEscaneadasActivity"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/miTema"
+            android:label="Escanear Redes">
+
         </activity>
         <activity
             android:name=".RedesGuardasActivity"
             android:label="Redes Guardadas"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+            android:parentActivityName=".MainActivity"
+            >
+
+        </activity>
+        <activity android:name=".EditarPasswordActivity"
+            android:label="Ingresar Contraseña"
+            android:parentActivityName=".RedesEscaneadasActivity"
+            android:theme="@style/miTema">
         </activity>
 
         <receiver
@@ -60,14 +63,6 @@
             android:exported="true"
             android:permission="" />
 
-        <activity android:name=".EditarPasswordActivity"
-            android:label="Ingresar Contraseña"
-            android:parentActivityName=".RedesEscaneadasActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".RedesEscaneadasActivity" />
-
-        </activity>
     </application>
 
 </manifest>
