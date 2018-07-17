@@ -61,7 +61,7 @@
             android:permission="" />
 
         <activity android:name=".EditarPasswordActivity"
-            android:label="Editar Contraseña"
+            android:label="Ingresar Contraseña"
             android:parentActivityName=".RedesEscaneadasActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"

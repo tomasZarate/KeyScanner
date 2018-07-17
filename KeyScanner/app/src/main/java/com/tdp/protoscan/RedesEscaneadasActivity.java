@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
@@ -29,20 +30,26 @@ import android.widget.Toast;
 
 import com.tdp.protoscan.OCR.OcrCaptureActivity;
 import com.google.android.gms.common.api.CommonStatusCodes;
+import com.tdp.protoscan.database.WifiNetworksDB;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RedesEscaneadasActivity extends AppCompatActivity{
 
+    //Views
     protected Button btn;
     protected ListView lvRedes;
-    protected ArrayList<ElementoRed> lista;
-    protected WifiAdapter adaptador;
+
     //Wifi
     protected WifiManager wifiManager;
     protected WifiScanReceiver mWifiScanResultReceiver;
+    protected ArrayList<ElementoRed> lista;
+    protected WifiAdapter adaptador;
 
+    //Base de datos
+    protected WifiNetworksDB mDbHelper;
+    protected SQLiteDatabase db;
     //Constantes
     private static final int RC_OCR_CAPTURE = 9003;
     private static final int RC_QR_CAPTURE = 9004;
@@ -58,7 +65,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        lvRedes = findViewById(R.id.listView);
+        lvRedes = findViewById(R.id.listViewRE);
         lvRedes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -86,6 +93,10 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
         });
         wifiManager = (WifiManager) this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         mWifiScanResultReceiver= new WifiScanReceiver();
+
+        mDbHelper = new WifiNetworksDB(getApplicationContext());
+        db = mDbHelper.getWritableDatabase();
+
     }
 
     private List<ScanResult> getWifi() {
