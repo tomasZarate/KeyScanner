@@ -8,4 +8,6 @@
     <color name="secondaryDarkColor">#32cb00</color>
     <color name="primaryTextColor">#fafafa</color>
     <color name="secondaryTextColor">#212121</color>
+    <color name="QRCodeBlackColor">#000000</color>
+    <color name="QRCodeWhiteColor">#ffffff</color>
 </resources>

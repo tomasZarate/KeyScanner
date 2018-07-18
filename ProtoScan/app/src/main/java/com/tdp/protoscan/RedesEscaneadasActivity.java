@@ -46,7 +46,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
     //Wifi
     protected WifiManager wifiManager;
     protected WifiScanReceiver mWifiScanResultReceiver;
-    protected ArrayList<ElementoRed> lista;
+    protected ArrayList<ElementoRed> listaRedes;
     protected WifiAdapter adaptador;
 
     //Base de datos
@@ -71,23 +71,23 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
         lvRedes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                redActual=lista.get(position).getNombreRed();
+                redActual=listaRedes.get(position).getNombreRed();
                 seleccionarEntrada();
             }
         });
-        lista = new ArrayList<>();
+        listaRedes = new ArrayList<>();
 
-        adaptador = new WifiAdapter(getApplicationContext(), lista);
+        adaptador = new WifiAdapter(getApplicationContext(), listaRedes);
         lvRedes.setAdapter(adaptador);
         btn=findViewById(R.id.button);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 List<ScanResult> redes=getWifi();
-                lista.clear();
+                listaRedes.clear();
                 adaptador.notifyDataSetChanged();
                 for(ScanResult e: redes){
-                    lista.add(new ElementoRed(e.SSID,e.level+""));
+                    listaRedes.add(new ElementoRed(e.SSID,e.level+""));
                     adaptador.notifyDataSetChanged();
                 }
 
@@ -164,7 +164,6 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
             }
         });
         builder.create().show();
-        //tomar el String para un metodo conectarRed(String password)
     }
 
     private void ingresarPassword(String input) {
