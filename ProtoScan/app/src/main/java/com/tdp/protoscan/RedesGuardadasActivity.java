@@ -1,6 +1,7 @@
 package com.tdp.protoscan;
 
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.support.v7.app.AlertDialog;
@@ -16,6 +17,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.tdp.protoscan.database.WifiNetworkContract;
 import com.tdp.protoscan.database.WifiNetworksDB;
 
 import java.util.ArrayList;
@@ -122,7 +124,25 @@ public class RedesGuardadasActivity extends AppCompatActivity {
 
     private void cargarRedes(){
 
-        db = mDbHelper.getWritableDatabase();
+        db = mDbHelper.getReadableDatabase();
+
+        String[] projection = {WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE, WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE};
+
+        Cursor cursor =
+                db.query(WifiNetworkContract.FeedEntry.TABLE_NAME,
+                        projection,
+                        " title = ?",
+                        new String[] { String.valueOf(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE) },
+                        null,
+                        null,
+                        null,
+                        null);
+
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        listaRedes.add(new ElementoRed(""+cursor.getString(1),""));
 
         adaptador.notifyDataSetChanged();
 
