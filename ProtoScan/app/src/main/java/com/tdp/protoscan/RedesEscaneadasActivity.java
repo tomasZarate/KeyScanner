@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationManager;
 import android.net.wifi.ScanResult;
@@ -97,13 +98,18 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
 
     private List<ScanResult> getWifi() {
 
-        List<ScanResult> resultados;
+        List<ScanResult> resultados=new ArrayList<>();;
         IntentFilter scanIntent = new IntentFilter();
         scanIntent.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
         getApplicationContext().registerReceiver(mWifiScanResultReceiver, scanIntent);
 
         if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0x12345);
+        }
+        else{
+            if(wifiManager.startScan()){
+                resultados= wifiManager.getScanResults();
+            }
         }
         if (!wifiManager.isWifiEnabled() && wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLING) {
             wifiManager.setWifiEnabled(true);
@@ -114,11 +120,6 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
         if (lm != null && !lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             Toast.makeText(getApplicationContext(), "Por favor, active la ubicacion", Toast.LENGTH_LONG).show();
         }
-        if(wifiManager.startScan()){
-            resultados= wifiManager.getScanResults();
-        }
-        else
-            resultados= new ArrayList<>();
 
         return resultados;
     }
@@ -132,6 +133,13 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
                 }
             }
             getWifi();
+        }
+        if(requestCode==0x1333){
+            for (int grantResult : grantResults) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+            }
         }
     }
 
@@ -169,6 +177,10 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
     }
 
     private void lanzarOCR(){
+
+        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA}, 0x1333);
+        }
         Intent intent = new Intent(getApplicationContext(), OcrCaptureActivity.class);
         intent.putExtra(OcrCaptureActivity.AutoFocus, true);
         intent.putExtra(OcrCaptureActivity.UseFlash, false);
@@ -253,7 +265,8 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
                 wifiManager.disconnect();
                 wifiManager.enableNetwork(i.networkId, true);
                 wifiManager.reconnect();
-                agregar(ssid, pass);
+                if(!existeEnBD(ssid))
+                    agregar(ssid, pass);
                 return true;
             }
         }
@@ -269,9 +282,36 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
         values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE, nombre);
         values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE, pass);
 
-        long id = db.insert(WifiNetworkContract.FeedEntry.TABLE_NAME, null,values); //-1 si hubo error en insertar
+        long id = db.insert(WifiNetworkContract.FeedEntry.TABLE_NAME, null, values); //-1 si hubo error en insertar
         db.close();
 
     }
 
+    public boolean existeEnBD(String key){
+
+        db = mDbHelper.getReadableDatabase();
+
+        String[] projection = {WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE, WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE};
+        String selection = WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE + " = ?";
+
+        Cursor cursor = db.query(WifiNetworkContract.FeedEntry.TABLE_NAME,
+                projection,
+                null,//selection,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        boolean encontre = false;
+
+        while(cursor.moveToNext() && !encontre) {
+            String item = cursor.getString(
+                    cursor.getColumnIndexOrThrow(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE));
+            if(item.equals(key)) encontre = true;
+        }
+
+        db.close();
+        return encontre;
+    }
 }

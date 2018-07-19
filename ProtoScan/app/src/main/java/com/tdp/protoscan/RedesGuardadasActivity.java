@@ -65,8 +65,8 @@ public class RedesGuardadasActivity extends AppCompatActivity {
 
         mDbHelper = new WifiNetworksDB(getApplicationContext());
 
-        testearLista();
-        testearBD();
+        //testearLista();
+        //testearBD();
         imagenqr= findViewById(R.id.qrImage);
         cargarRedes();
     }
