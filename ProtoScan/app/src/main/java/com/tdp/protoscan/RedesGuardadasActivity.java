@@ -144,23 +144,19 @@ public class RedesGuardadasActivity extends AppCompatActivity {
 
         Cursor cursor = db.query(WifiNetworkContract.FeedEntry.TABLE_NAME,
                 projection,
-                selection,
-                new String[] { String.valueOf(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE) },
+                null,//selection,
+                null,
                 null,
                 null,
                 null,
                 null);
 
-        System.out.println(cursor.moveToFirst()) ; //devuelve false si el cursor esta vacío
-        while(cursor.moveToNext()) {
-            //no entra nunca acá
+        while(cursor.moveToNext()) {  //Poniendo "selection" en null ya no revienta y entra, habria que ver si afecta mas adelante
             String item = cursor.getString(
-                    cursor.getColumnIndexOrThrow(WifiNetworkContract.FeedEntry._ID));
-            System.out.println("Adentro de while");
-            listaRedes.add(new ElementoRed(item,"..."));
+                    cursor.getColumnIndexOrThrow(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE));
+            listaRedes.add(new ElementoRed(item,"...")); //Ya se listan las redes con los casos de prueba
         }
 
-        //listaRedes.add(new ElementoRed(""+cursor.getString(0),"")); //revienta por cursor vacío
         cursor.close();
         adaptador.notifyDataSetChanged();
     }
