@@ -65,22 +65,8 @@ public class RedesGuardadasActivity extends AppCompatActivity {
 
         mDbHelper = new WifiNetworksDB(getApplicationContext());
 
-        //testearLista();
-        //testearBD();
         imagenqr= findViewById(R.id.qrImage);
         cargarRedes();
-    }
-
-    private void testearBD() {
-
-        db = mDbHelper.getReadableDatabase();
-        ContentValues values = new ContentValues();
-        values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE, "nombre");
-        values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE, "password");
-
-        long id = db.insert(WifiNetworkContract.FeedEntry.TABLE_NAME, null,values); //-1 si hubo error en insertar
-        db.close();
-
     }
 
     private void seleccionarOpcion() {
@@ -127,13 +113,6 @@ public class RedesGuardadasActivity extends AppCompatActivity {
 
     }
 
-    private void testearLista() {
-
-        listaRedes.add(new ElementoRed("lalala","123"));
-        adaptador.notifyDataSetChanged();
-
-    }
-
     private void cargarRedes(){
 
         db = mDbHelper.getReadableDatabase();
@@ -152,9 +131,11 @@ public class RedesGuardadasActivity extends AppCompatActivity {
                 null);
 
         while(cursor.moveToNext()) {  //Poniendo "selection" en null ya no revienta y entra, habria que ver si afecta mas adelante
-            String item = cursor.getString(
+            String name = cursor.getString(
                     cursor.getColumnIndexOrThrow(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE));
-            listaRedes.add(new ElementoRed(item,"...")); //Ya se listan las redes con los casos de prueba
+            String pass = cursor.getString(
+                    cursor.getColumnIndexOrThrow(WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE));
+            listaRedes.add(new ElementoRed(name,pass)); //Ya se listan las redes con los casos de prueba
         }
 
         cursor.close();

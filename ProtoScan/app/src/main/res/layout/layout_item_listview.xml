@@ -9,7 +9,8 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/signalContent"
@@ -19,6 +20,6 @@
         android:layout_below="@+id/ssidField"
         android:text="TextView"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
-        android:textSize="14sp" />
+        android:textSize="18sp" />
 
 </RelativeLayout>

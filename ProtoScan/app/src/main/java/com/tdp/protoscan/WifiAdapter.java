@@ -39,12 +39,12 @@ public class WifiAdapter extends ArrayAdapter{
 
         // Recogemos el TextView para mostrar el nombre y establecemos el
         // nombre.
-        TextView nombre = (TextView) item.findViewById(R.id.ssidField);
-        nombre.setText(datos.get(position).getNombreRed());
+        TextView nombre = item.findViewById(R.id.ssidField);
+        nombre.setText("Nombre red: "+datos.get(position).getNombreRed());
 
         // Recogemos el TextView para mostrar el número de celda y lo
         // establecemos.
-        TextView seguridad = (TextView) item.findViewById(R.id.signalContent);
+        TextView seguridad = item.findViewById(R.id.signalContent);
         seguridad.setText(datos.get(position).getSignal());
 
         // Devolvemos la vista para que se muestre en el ListView.

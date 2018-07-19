@@ -82,7 +82,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
                 listaRedes.clear();
                 adaptador.notifyDataSetChanged();
                 for(ScanResult e: redes){
-                    listaRedes.add(new ElementoRed(e.SSID,e.level+""));
+                    listaRedes.add(new ElementoRed(e.SSID,"Intensidad: "+e.level));
                     adaptador.notifyDataSetChanged();
                 }
 
@@ -108,7 +108,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
         }
         else{
             if(wifiManager.startScan()){
-                resultados= wifiManager.getScanResults();
+                resultados = wifiManager.getScanResults();
             }
         }
         if (!wifiManager.isWifiEnabled() && wifiManager.getWifiState() != WifiManager.WIFI_STATE_ENABLING) {
