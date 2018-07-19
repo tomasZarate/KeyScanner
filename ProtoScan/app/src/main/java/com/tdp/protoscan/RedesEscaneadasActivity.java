@@ -1,10 +1,6 @@
 package com.tdp.protoscan;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.FragmentManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,21 +12,19 @@ import android.location.LocationManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.tdp.protoscan.OCR.OcrCaptureActivity;
 import com.google.android.gms.common.api.CommonStatusCodes;
+import com.tdp.protoscan.OCR.OcrCaptureActivity;
 import com.tdp.protoscan.database.WifiNetworkContract;
 import com.tdp.protoscan.database.WifiNetworksDB;
 
@@ -117,8 +111,8 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
 
         LocationManager lm= (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 
-        if (!lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            //Toast.makeText(getApplicationContext(),"Por favor, active la ubicacion", Toast.LENGTH_LONG).show();
+        if (lm != null && !lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            Toast.makeText(getApplicationContext(), "Por favor, active la ubicacion", Toast.LENGTH_LONG).show();
         }
         if(wifiManager.startScan()){
             resultados= wifiManager.getScanResults();
@@ -130,7 +124,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, int[] grantResults) {
         if (requestCode == 0x12345) {
             for (int grantResult : grantResults) {
                 if (grantResult != PackageManager.PERMISSION_GRANTED) {
@@ -220,12 +214,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
                         });
                         builder.create().show();
 
-                    } else {
-                        //statusMessage.setText(R.string.ocr_failure);
-                        //Log.d("MainActivity", "No Text captured, intent data is null");
                     }
-                } else {
-                    // statusMessage.setText(String.format(getString(R.string.ocr_error), CommonStatusCodes.getStatusCodeString(resultCode)));
                 }
                 break;
             case RC_QR_CAPTURE:
@@ -235,7 +224,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
             case RC_EDITOR:
                 if(data!=null){
                     String resultado = data.getStringExtra("resultado");
-                    if ( resultado!= ""){
+                    if (!resultado.equals("")){
                         if(conectarRed(redActual,resultado))
                             Toast.makeText(getApplicationContext(),"Conexion exitosa", Toast.LENGTH_LONG).show();
                         else
@@ -281,7 +270,6 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
         values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE, pass);
 
         long id = db.insert(WifiNetworkContract.FeedEntry.TABLE_NAME, null,values); //-1 si hubo error en insertar
-
         db.close();
 
     }

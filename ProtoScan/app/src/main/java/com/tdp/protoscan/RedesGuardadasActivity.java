@@ -1,5 +1,6 @@
 package com.tdp.protoscan;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -65,8 +66,20 @@ public class RedesGuardadasActivity extends AppCompatActivity {
         mDbHelper = new WifiNetworksDB(getApplicationContext());
 
         testearLista();
-
+        testearBD();
         imagenqr= findViewById(R.id.qrImage);
+        cargarRedes();
+    }
+
+    private void testearBD() {
+
+        db = mDbHelper.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE, "nombre");
+        values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE, "password");
+
+        long id = db.insert(WifiNetworkContract.FeedEntry.TABLE_NAME, null,values); //-1 si hubo error en insertar
+        db.close();
 
     }
 
@@ -90,7 +103,6 @@ public class RedesGuardadasActivity extends AppCompatActivity {
             }
         });
         builder.create().show();
-
 
     }
 
@@ -127,25 +139,29 @@ public class RedesGuardadasActivity extends AppCompatActivity {
         db = mDbHelper.getReadableDatabase();
 
         String[] projection = {WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE, WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE};
-
-        Cursor cursor =
-                db.query(WifiNetworkContract.FeedEntry.TABLE_NAME,
-                        projection,
-                        " title = ?",
-                        new String[] { String.valueOf(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE) },
-                        null,
-                        null,
-                        null,
-                        null);
+        String selection = WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE + " = ?";
 
 
-        if (cursor != null)
-            cursor.moveToFirst();
+        Cursor cursor = db.query(WifiNetworkContract.FeedEntry.TABLE_NAME,
+                projection,
+                selection,
+                new String[] { String.valueOf(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE) },
+                null,
+                null,
+                null,
+                null);
 
-        listaRedes.add(new ElementoRed(""+cursor.getString(1),""));
+        System.out.println(cursor.moveToFirst()) ;
+        while(cursor.moveToNext()) {
+            String item = cursor.getString(
+                    cursor.getColumnIndexOrThrow(WifiNetworkContract.FeedEntry._ID));
+            System.out.println("Adentro de while");
+            listaRedes.add(new ElementoRed(item,"..."));
+        }
 
+        //listaRedes.add(new ElementoRed(""+cursor.getString(0),""));
+        cursor.close();
         adaptador.notifyDataSetChanged();
-
     }
 
     private Bitmap TextToImageEncode(String Value) throws WriterException {
