@@ -129,7 +129,7 @@ public class RedesGuardadasActivity extends AppCompatActivity {
 
     private void testearLista() {
 
-        listaRedes.add(new ElementoRed("lalalalala","123"));
+        listaRedes.add(new ElementoRed("lalala","123"));
         adaptador.notifyDataSetChanged();
 
     }
@@ -151,15 +151,16 @@ public class RedesGuardadasActivity extends AppCompatActivity {
                 null,
                 null);
 
-        System.out.println(cursor.moveToFirst()) ;
+        System.out.println(cursor.moveToFirst()) ; //devuelve false si el cursor esta vacío
         while(cursor.moveToNext()) {
+            //no entra nunca acá
             String item = cursor.getString(
                     cursor.getColumnIndexOrThrow(WifiNetworkContract.FeedEntry._ID));
             System.out.println("Adentro de while");
             listaRedes.add(new ElementoRed(item,"..."));
         }
 
-        //listaRedes.add(new ElementoRed(""+cursor.getString(0),""));
+        //listaRedes.add(new ElementoRed(""+cursor.getString(0),"")); //revienta por cursor vacío
         cursor.close();
         adaptador.notifyDataSetChanged();
     }
