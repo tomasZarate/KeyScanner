@@ -240,10 +240,12 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
             case RC_QR_CAPTURE:
                 if(data!=null){
                     final Barcode barcode = data.getParcelableExtra("barcode");
-                    System.out.println(barcode.displayValue);
+                    if(conectarRed(redActual,barcode.displayValue))
+                        Toast.makeText(getApplicationContext(),"Conexion exitosa", Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(getApplicationContext(),"Fallo la conexion", Toast.LENGTH_LONG).show();
+                    break;
                 }
-
-
                 break;
 
             case RC_EDITOR:

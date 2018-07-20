@@ -27,7 +27,7 @@ public class RedesGuardadasActivity extends AppCompatActivity {
     protected ArrayList<ElementoRed> listaRedes;
     protected WifiAdapter adaptador;
     private ListView lvRedes;
-    private String redActual;
+    private ElementoRed redActual;
 
     //Base de datos
     protected WifiNetworksDB mDbHelper;
@@ -52,13 +52,12 @@ public class RedesGuardadasActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                redActual = listaRedes.get(position).getNombreRed();
+                redActual = listaRedes.get(position);
                 seleccionarOpcion();
 
             }
         });
         listaRedes = new ArrayList<>();
-
         adaptador = new WifiAdapter(getApplicationContext(), listaRedes);
         lvRedes.setAdapter(adaptador);
 
@@ -93,22 +92,15 @@ public class RedesGuardadasActivity extends AppCompatActivity {
 
     private void generarQR() {
 
-        ImageView imagen = findViewById(R.id.qrImage);;
-        AlertDialog.Builder qrcode = new AlertDialog.Builder(this);
         try {
             Bitmap bitmap;
 
-            bitmap = TextToImageEncode(redActual);
+            bitmap = TextToImageEncode(redActual.getPass());
 
-            //imagen.setImageBitmap(bitmap);
             imagenqr.setImageBitmap(bitmap);
-            //imagenqr.setFocusable(true);
         } catch (WriterException e) {
             e.printStackTrace();
         }
-
-        //qrcode.create().show();
-
 
     }
 
@@ -117,7 +109,7 @@ public class RedesGuardadasActivity extends AppCompatActivity {
         db = mDbHelper.getReadableDatabase();
 
         String[] projection = {WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE, WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE};
-        String selection = WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE + " = ?";
+        //String selection = WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE + " = ?";
 
 
         Cursor cursor = db.query(WifiNetworkContract.FeedEntry.TABLE_NAME,
@@ -129,12 +121,12 @@ public class RedesGuardadasActivity extends AppCompatActivity {
                 null,
                 null);
 
-        while(cursor.moveToNext()) {  //Poniendo "selection" en null ya no revienta y entra, habria que ver si afecta mas adelante
+        while(cursor.moveToNext()) {
             String name = cursor.getString(
                     cursor.getColumnIndexOrThrow(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE));
             String pass = cursor.getString(
                     cursor.getColumnIndexOrThrow(WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE));
-            listaRedes.add(new ElementoRed(name,pass)); //Ya se listan las redes con los casos de prueba
+            listaRedes.add(new ElementoRed(name,pass));
         }
 
         cursor.close();

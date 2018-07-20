@@ -19,7 +19,7 @@ public class ElementoRed {
         return nombreRed;
     }
 
-    public String getSignal(){
+    public String getPass(){
         return signal;
     }
 

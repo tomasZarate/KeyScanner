@@ -45,7 +45,7 @@ public class WifiAdapter extends ArrayAdapter{
         // Recogemos el TextView para mostrar el número de celda y lo
         // establecemos.
         TextView seguridad = item.findViewById(R.id.signalContent);
-        seguridad.setText(datos.get(position).getSignal());
+        seguridad.setText(datos.get(position).getPass());
 
         // Devolvemos la vista para que se muestre en el ListView.
         return item;
