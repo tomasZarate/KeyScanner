@@ -40,16 +40,17 @@
             android:name=".RedesEscaneadasActivity"
             android:label="Escanear Redes"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/miTema"/>
+            android:theme="@style/miTema" />
         <activity
             android:name=".EditarPasswordActivity"
             android:label="Ingresar Contraseña"
             android:parentActivityName=".RedesEscaneadasActivity"
-            android:theme="@style/miTema"/>
-        <activity android:name=".RedesGuardadasActivity"
+            android:theme="@style/miTema" />
+        <activity
+            android:name=".RedesGuardadasActivity"
             android:label="Redes Guardadas"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/miTema"/>
+            android:theme="@style/miTema" />
 
         <receiver
             android:name=".WifiScanReceiver"
@@ -57,7 +58,7 @@
             android:exported="true"
             android:permission="" />
 
-
+        <activity android:name=".QRScanActivity"></activity>
     </application>
 
 </manifest>

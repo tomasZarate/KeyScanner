@@ -25,6 +25,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.barcode.Barcode;
 import com.tdp.protoscan.OCR.OcrCaptureActivity;
 import com.tdp.protoscan.database.WifiNetworkContract;
 import com.tdp.protoscan.database.WifiNetworksDB;
@@ -156,7 +157,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
                         lanzarOCR(); //Deberia retornar un String
                         break;
                     case 1:
-                        //lanzarQR(); //Deberia retornar un String
+                        lanzarQR(); //Deberia retornar un String
                         break;
                     case 2:
                         //Colocar manualmente la contraseña
@@ -166,6 +167,13 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
             }
         });
         builder.create().show();
+    }
+
+    private void lanzarQR() {
+
+        Intent intent = new Intent(getApplicationContext(),QRScanActivity.class);
+        startActivityForResult(intent, RC_QR_CAPTURE);
+
     }
 
     private void ingresarPassword(String input) {
@@ -230,7 +238,12 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
                 }
                 break;
             case RC_QR_CAPTURE:
-                //Completar
+                if(data!=null){
+                    final Barcode barcode = data.getParcelableExtra("barcode");
+                    System.out.println(barcode.displayValue);
+                }
+
+
                 break;
 
             case RC_EDITOR:

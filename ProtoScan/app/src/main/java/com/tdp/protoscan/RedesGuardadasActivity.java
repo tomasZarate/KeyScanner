@@ -1,6 +1,5 @@
 package com.tdp.protoscan;
 
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
