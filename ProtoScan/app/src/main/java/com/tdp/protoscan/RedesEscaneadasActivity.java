@@ -79,14 +79,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<ScanResult> redes=getWifi();
-                listaRedes.clear();
-                adaptador.notifyDataSetChanged();
-                for(ScanResult e: redes){
-                    listaRedes.add(new ElementoRed(e.SSID,"Intensidad: "+e.level));
-                    adaptador.notifyDataSetChanged();
-                }
-
+                actualizarLista();
             }
         });
         wifiManager = (WifiManager) this.getApplicationContext().getSystemService(Context.WIFI_SERVICE);
@@ -94,7 +87,17 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
 
         mDbHelper = new WifiNetworksDB(getApplicationContext());
 
+        actualizarLista();
+    }
 
+    private void actualizarLista() {
+        List<ScanResult> redes=getWifi();
+        listaRedes.clear();
+        adaptador.notifyDataSetChanged();
+        for(ScanResult e: redes){
+            listaRedes.add(new ElementoRed(e.SSID,"Intensidad: "+e.level));
+            adaptador.notifyDataSetChanged();
+        }
     }
 
     private List<ScanResult> getWifi() {
