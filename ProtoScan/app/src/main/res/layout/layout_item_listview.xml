@@ -5,7 +5,7 @@
 
     <TextView
         android:id="@+id/ssidField"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textColor="@color/common_google_signin_btn_text_dark_focused"
@@ -14,7 +14,7 @@
 
     <TextView
         android:id="@+id/signalContent"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/ssidField"

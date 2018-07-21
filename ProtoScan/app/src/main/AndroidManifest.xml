@@ -15,10 +15,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/miTema">
+        android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
-            android:theme="@style/miTema">
+            android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,8 +27,7 @@
         <activity
             android:name=".AboutActivity"
             android:label="@string/about"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/miTema">
+            android:parentActivityName=".MainActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
         </activity>
@@ -39,24 +37,21 @@
         <activity
             android:name=".RedesEscaneadasActivity"
             android:label="Escanear Redes"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/miTema" />
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".EditarPasswordActivity"
             android:label="Ingresar Contraseña"
-            android:parentActivityName=".RedesEscaneadasActivity"
-            android:theme="@style/miTema" />
+            android:parentActivityName=".RedesEscaneadasActivity"/>
         <activity
             android:name=".RedesGuardadasActivity"
             android:label="Redes Guardadas"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/miTema" />
+            android:parentActivityName=".MainActivity"/>
 
         <receiver
             android:name=".WifiScanReceiver"
             android:enabled="true"
             android:exported="true"
-            android:permission="" />
+            android:permission=""/>
 
         <activity android:name=".QRScanActivity"/>
     </application>
