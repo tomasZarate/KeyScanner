@@ -58,7 +58,7 @@
             android:exported="true"
             android:permission="" />
 
-        <activity android:name=".QRScanActivity"></activity>
+        <activity android:name=".QRScanActivity"/>
     </application>
 
 </manifest>

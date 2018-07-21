@@ -42,10 +42,6 @@ public class RedesGuardadasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_redes_guardadas);
 
-        Toolbar toolbar=findViewById(R.id.my_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         lvRedes = findViewById(R.id.listViewRG);
         lvRedes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
