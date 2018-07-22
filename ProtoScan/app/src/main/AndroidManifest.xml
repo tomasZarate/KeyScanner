@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity">
+            android:name=".MainActivity"
+            android:theme="@style/Toolbar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -46,14 +47,16 @@
             android:name=".RedesGuardadasActivity"
             android:label="Redes Guardadas"
             android:parentActivityName=".MainActivity"/>
-
+        <activity
+            android:name=".QRScanActivity"
+            android:label="Read QR"/>
         <receiver
             android:name=".WifiScanReceiver"
             android:enabled="true"
             android:exported="true"
             android:permission=""/>
 
-        <activity android:name=".QRScanActivity"/>
+
     </application>
 
 </manifest>

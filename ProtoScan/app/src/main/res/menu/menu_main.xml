@@ -9,4 +9,13 @@
         android:orderInCategory="100"
         app:showAsAction="never" />
 
+    <item android:id="@+id/action_escanear"
+        android:title="Escanear Redes"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_guardadas"
+        android:title="Redes Guardadas"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

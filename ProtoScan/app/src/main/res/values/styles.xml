@@ -19,9 +19,10 @@
     </style>
 
 
-    <style name="Toolbar" parent="Theme.AppCompat">
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="android:textColorPrimary">@color/primaryTextColor</item>
+    <style name="Toolbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
