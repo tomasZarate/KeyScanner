@@ -116,7 +116,6 @@ public class EscanearRedesFragment extends Fragment {
         adaptador.notifyDataSetChanged();
         for(ScanResult e: redes){
             listaRedes.add(new ElementoRed(e.SSID,"Intensidad: "+calcularIntensidad(e.level) + " RSSI: "+e.level));
-            listaRedes.add(new ElementoRed(e.SSID,"Intensidad: "+calcularIntensidad(e.level) + " RSSI: "+e.level));
             adaptador.notifyDataSetChanged();
         }
     }
