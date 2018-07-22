@@ -35,7 +35,7 @@ import com.tdp.protoscan.database.WifiNetworksDB;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EscanearFragment extends Fragment {
+public class EscanearRedesFragment extends Fragment {
 
     //Views
     protected Button btn;
@@ -56,22 +56,22 @@ public class EscanearFragment extends Fragment {
     private static final int RC_EDITOR = 9005;
     private String redActual;
 
-    public EscanearFragment() {
+    public EscanearRedesFragment() {
     }
 
     /**
      * Returns a new instance of this fragment for the given section
      * number.
      */
-    public static EscanearFragment newInstance() {
-        EscanearFragment fragment = new EscanearFragment();
+    public static EscanearRedesFragment newInstance() {
+        EscanearRedesFragment fragment = new EscanearRedesFragment();
         return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_escanear, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_escanear_redes, container, false);
         return rootView;
     }
 
@@ -115,6 +115,7 @@ public class EscanearFragment extends Fragment {
         listaRedes.clear();
         adaptador.notifyDataSetChanged();
         for(ScanResult e: redes){
+            listaRedes.add(new ElementoRed(e.SSID,"Intensidad: "+calcularIntensidad(e.level) + " RSSI: "+e.level));
             listaRedes.add(new ElementoRed(e.SSID,"Intensidad: "+calcularIntensidad(e.level) + " RSSI: "+e.level));
             adaptador.notifyDataSetChanged();
         }

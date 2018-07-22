@@ -71,14 +71,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
                 return true;
-            case R.id.action_escanear:
-                Intent intentER = new Intent(getApplicationContext(),RedesEscaneadasActivity.class);
-                startActivity(intentER);
-                return true;
-            case R.id.action_guardadas:
-                Intent intentRG = new Intent(getApplicationContext(), RedesGuardadasActivity.class);
-                startActivity(intentRG);
-                return true;
             default:
                 // If we got here, the user's action was not recognized.
                 // Invoke the superclass to handle it.
@@ -136,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position){
                 case 0:
-                    return EscanearFragment.newInstance();
+                    return EscanearRedesFragment.newInstance();
                 case 1:
                     return RedesGuardadasFragment.newInstance();
                 case 2:

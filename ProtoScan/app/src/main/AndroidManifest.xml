@@ -36,16 +36,8 @@
             android:name=".OCR.OcrCaptureActivity"
             android:label="Read Text" />
         <activity
-            android:name=".RedesEscaneadasActivity"
-            android:label="Escanear Redes"
-            android:parentActivityName=".MainActivity"/>
-        <activity
             android:name=".EditarPasswordActivity"
             android:label="Ingresar Contraseña"
-            android:parentActivityName=".RedesEscaneadasActivity"/>
-        <activity
-            android:name=".RedesGuardadasActivity"
-            android:label="Redes Guardadas"
             android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".QRScanActivity"
