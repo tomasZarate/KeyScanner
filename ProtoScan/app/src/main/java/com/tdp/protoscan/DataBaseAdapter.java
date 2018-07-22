@@ -10,16 +10,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-/**
- * Created by tomi on 22/5/2018.
- */
-
-public class WifiAdapter extends ArrayAdapter{
+public class DataBaseAdapter extends ArrayAdapter {
 
     private Context context;
-    private ArrayList<ElementoRed> datos;
+    private ArrayList<ElementoBBDD> datos;
 
-    public WifiAdapter(@NonNull Context context, ArrayList<ElementoRed> datos) {
+    public DataBaseAdapter(@NonNull Context context, ArrayList<ElementoBBDD> datos) {
         super(context, R.layout.layout_item_listview, datos);
 
         this.context = context;
@@ -32,23 +28,24 @@ public class WifiAdapter extends ArrayAdapter{
         // mostrará en la celda del ListView. Para ello primero creamos el
         // inflater, y después inflamos la vista.
         LayoutInflater inflater = LayoutInflater.from(context);
-        View item = inflater.inflate(R.layout.layout_item_listview, null);
+        View item = inflater.inflate(R.layout.layout_item_database, null);
 
         // A partir de la vista, recogeremos los controles que contiene para
         // poder manipularlos.
 
         // Recogemos el TextView para mostrar el nombre y establecemos el
         // nombre.
-        TextView nombre = item.findViewById(R.id.ssidField);
-        nombre.setText("Nombre red: "+datos.get(position).getNombreRed());
+        TextView nombre = item.findViewById(R.id.nameField);
+        nombre.setText("Nombre red: "+datos.get(position).getNombre());
 
         // Recogemos el TextView para mostrar el número de celda y lo
         // establecemos.
+        /*
         TextView signal = item.findViewById(R.id.signalContent);
         signal.setText(datos.get(position).getSignal());
-
+        */
         // Devolvemos la vista para que se muestre en el ListView.
         return item;
     }
-}
 
+}

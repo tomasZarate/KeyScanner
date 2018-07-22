@@ -24,10 +24,10 @@ import java.util.ArrayList;
 
 public class RedesGuardadasActivity extends AppCompatActivity {
 
-    protected ArrayList<ElementoRed> listaRedes;
-    protected WifiAdapter adaptador;
+    protected ArrayList<ElementoBBDD> listaBBDD; //Lista con password
+    protected DataBaseAdapter adaptador;
     private ListView lvRedes;
-    private ElementoRed redActual;
+    private ElementoBBDD redActual;
 
     //Base de datos
     protected WifiNetworksDB mDbHelper;
@@ -42,19 +42,18 @@ public class RedesGuardadasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_redes_guardadas);
 
-
         lvRedes = findViewById(R.id.listViewRG);
         lvRedes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
-                redActual = listaRedes.get(position);
+                redActual = listaBBDD.get(position);
                 seleccionarOpcion();
 
             }
         });
-        listaRedes = new ArrayList<>();
-        adaptador = new WifiAdapter(getApplicationContext(), listaRedes);
+        listaBBDD = new ArrayList<>();
+        adaptador = new DataBaseAdapter(getApplicationContext(), listaBBDD);
         lvRedes.setAdapter(adaptador);
 
         mDbHelper = new WifiNetworksDB(getApplicationContext());
@@ -91,7 +90,7 @@ public class RedesGuardadasActivity extends AppCompatActivity {
         try {
             Bitmap bitmap;
 
-            bitmap = TextToImageEncode(redActual.getPass());
+            bitmap = TextToImageEncode(redActual.getPassword());
 
             imagenqr.setImageBitmap(bitmap);
         } catch (WriterException e) {
@@ -122,7 +121,7 @@ public class RedesGuardadasActivity extends AppCompatActivity {
                     cursor.getColumnIndexOrThrow(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE));
             String pass = cursor.getString(
                     cursor.getColumnIndexOrThrow(WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE));
-            listaRedes.add(new ElementoRed(name,pass));
+            listaBBDD.add(new ElementoBBDD(name,pass));
         }
 
         cursor.close();
