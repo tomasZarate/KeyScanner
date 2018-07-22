@@ -24,9 +24,10 @@
 
     <ListView
         android:id="@+id/listViewRE"
-        android:layout_width="381dp"
+        android:layout_width="0dp"
         android:layout_height="440dp"
         android:layout_marginBottom="11dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintLeft_toLeftOf="parent"

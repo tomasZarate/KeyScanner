@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -92,9 +93,18 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
         listaRedes.clear();
         adaptador.notifyDataSetChanged();
         for(ScanResult e: redes){
-            listaRedes.add(new ElementoRed(e.SSID,"Intensidad: "+e.level));
+            listaRedes.add(new ElementoRed(e.SSID,"Intensidad: "+calcularIntensidad(e.level) + " RSSI: "+e.level));
             adaptador.notifyDataSetChanged();
         }
+    }
+
+    private String calcularIntensidad(int i) {
+
+        int numberOfLevels = 5;
+        int level = wifiManager.calculateSignalLevel(i,numberOfLevels);
+        //level++;
+        return ""+level;
+
     }
 
     private List<ScanResult> getWifi() {
