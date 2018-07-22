@@ -12,13 +12,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -100,16 +98,27 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
 
     private String calcularIntensidad(int i) {
 
-        int numberOfLevels = 5;
-        int level = wifiManager.calculateSignalLevel(i,numberOfLevels);
-        //level++;
-        return ""+level;
+        int numberOfLevels = 4;
+        int level = WifiManager.calculateSignalLevel(i,numberOfLevels);
+        level++;
 
+        switch (level) {
+            case 1:
+                return "Baja";
+            case 2:
+                return "Regular";
+            case 3:
+                return "Buena";
+            case 4:
+                return "Excelente";
+            default:
+                return "";
+        }
     }
 
     private List<ScanResult> getWifi() {
 
-        List<ScanResult> resultados=new ArrayList<>();;
+        List<ScanResult> resultados=new ArrayList<>();
         IntentFilter scanIntent = new IntentFilter();
         scanIntent.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
         getApplicationContext().registerReceiver(mWifiScanResultReceiver, scanIntent);
@@ -136,7 +145,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (requestCode == 0x12345) {
             for (int grantResult : grantResults) {
                 if (grantResult != PackageManager.PERMISSION_GRANTED) {
@@ -307,7 +316,7 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
         values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE, nombre);
         values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE, pass);
 
-        long id = db.insert(WifiNetworkContract.FeedEntry.TABLE_NAME, null, values); //-1 si hubo error en insertar
+        db.insert(WifiNetworkContract.FeedEntry.TABLE_NAME, null, values); //-1 si hubo error en insertar
         db.close();
 
     }
@@ -317,7 +326,6 @@ public class RedesEscaneadasActivity extends AppCompatActivity{
         db = mDbHelper.getReadableDatabase();
 
         String[] projection = {WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE, WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE};
-        String selection = WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE + " = ?";
 
         Cursor cursor = db.query(WifiNetworkContract.FeedEntry.TABLE_NAME,
                 projection,
