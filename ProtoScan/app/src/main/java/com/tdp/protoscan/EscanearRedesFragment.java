@@ -104,7 +104,7 @@ public class EscanearRedesFragment extends Fragment {
         mDbHelper = new WifiNetworksDB(getActivity().getApplicationContext());
 
         actualizarLista();
-        final Handler hand = new Handler();
+        /*final Handler hand = new Handler();
         Runnable hilo = new Runnable() {
             @Override
             public void run() {
@@ -112,7 +112,7 @@ public class EscanearRedesFragment extends Fragment {
                 hand.postDelayed(this,1000);
             }
         };
-        hand.postDelayed(hilo,1000);
+        hand.postDelayed(hilo,1000);*/
     }
 
     @Override

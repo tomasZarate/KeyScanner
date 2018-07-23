@@ -15,14 +15,4 @@
         android:layout_height="280dp"
         android:layout_centerInParent="true"/>
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Guardar Patron"
-        android:id="@+id/btnSetearPatron"
-        android:layout_below="@+id/pattern_lock_view"
-        android:layout_centerHorizontal="true"/>
-
-
 </RelativeLayout>
