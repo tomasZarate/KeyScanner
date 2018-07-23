@@ -38,19 +38,21 @@
         <activity
             android:name=".EditarPasswordActivity"
             android:label="Ingresar Contraseña"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".QRScanActivity"
-            android:label="Read QR"/>
+            android:label="Read QR" />
+
         <receiver
             android:name=".WifiScanReceiver"
             android:enabled="true"
             android:exported="true"
-            android:permission=""/>
+            android:permission="" />
 
-
-
+        <activity
+            android:name=".CrearPatron"
+            android:label="@string/title_activity_crear_patron"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
-
 
 </manifest>

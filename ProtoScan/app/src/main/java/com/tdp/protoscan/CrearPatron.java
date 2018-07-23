@@ -23,92 +23,91 @@ import io.paperdb.Paper;
 
 public class CrearPatron extends AppCompatActivity {
 
-        String save_pattern_key = "pattern_code";
-        String final_pattern = "";
-        PatternLockView mPatternLockView;
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
+    String save_pattern_key = "pattern_code";
+    String final_pattern = "";
+    PatternLockView mPatternLockView;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-            Paper.init(this);
-            final String save_pattern = Paper.book().read(save_pattern_key);
-            if(save_pattern != null && !save_pattern.equals("null"))
-            {
-                setContentView(R.layout.activity_principal); //actividad para confirmar el patron
-                mPatternLockView = (PatternLockView)findViewById(R.id.pattern_lock_view);
-                mPatternLockView.addPatternLockListener(new PatternLockViewListener() {
-                    @Override
-                    public void onStarted() {
+        Paper.init(this);
+        final String save_pattern = Paper.book().read(save_pattern_key);
+        if(save_pattern != null && !save_pattern.equals("null"))
+        {
+            setContentView(R.layout.activity_principal); //actividad para confirmar el patron
+            mPatternLockView = (PatternLockView)findViewById(R.id.pattern_lock_view);
+            mPatternLockView.addPatternLockListener(new PatternLockViewListener() {
+                @Override
+                public void onStarted() {
 
-                    }
+                }
 
-                    @Override
-                    public void onProgress(List<PatternLockView.Dot> progressPattern) {
+                @Override
+                public void onProgress(List<PatternLockView.Dot> progressPattern) {
 
-                    }
+                }
 
-                    @Override
-                    public void onComplete(List<PatternLockView.Dot> pattern) {
-                        final_pattern = PatternLockUtils.patternToString(mPatternLockView,pattern);
-                        if(final_pattern.equals(save_pattern)){
-                            Toast.makeText(CrearPatron.this, "Password Correct!", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(CrearPatron.this,ActividadDesbloqueada.class); //Aca iria el cuadro flotante
-                            startActivity(intent);
-
-
-                        }else{ Toast.makeText(CrearPatron.this, "Password Incorrecta!", Toast.LENGTH_SHORT).show();}
-
-
-                    }
-
-                    @Override
-                    public void onCleared() {
-
-                    }
-                });
-            }
-            else
-            {
-
-                setContentView(R.layout.activity_main);
-                mPatternLockView = (PatternLockView)findViewById(R.id.pattern_lock_view);
-                mPatternLockView.addPatternLockListener(new PatternLockViewListener() {
-                    @Override
-                    public void onStarted() {
-
-                    }
-
-                    @Override
-                    public void onProgress(List<PatternLockView.Dot> progressPattern) {
-
-                    }
-
-                    @Override
-                    public void onComplete(List<PatternLockView.Dot> pattern) {
-                        final_pattern = PatternLockUtils .patternToString(mPatternLockView,pattern);
-
-                    }
-
-                    @Override
-                    public void onCleared() {
-
-                    }
-                });
-
-
-
-
-                Button btnSetup = (Button)findViewById(R.id.btnSetearPatron);
-                btnSetup.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Paper.book().write(save_pattern_key, final_pattern);
-                        Toast.makeText(MainActivity.this, "Save pattern okay!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(CrearPatron.this,Principal.class); //clase de la activity para confirmar patron
+                @Override
+                public void onComplete(List<PatternLockView.Dot> pattern) {
+                    final_pattern = PatternLockUtils.patternToString(mPatternLockView,pattern);
+                    if(final_pattern.equals(save_pattern)){
+                        Toast.makeText(CrearPatron.this, "Password Correct!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(CrearPatron.this,ActividadDesbloqueada.class); //Aca iria el cuadro flotante
                         startActivity(intent);
-                    }
-                });
-            }
+
+
+                    }else{ Toast.makeText(CrearPatron.this, "Password Incorrecta!", Toast.LENGTH_SHORT).show();}
+
+
+                }
+
+                @Override
+                public void onCleared() {
+
+                }
+            });
+        }
+        else
+        {
+
+            setContentView(R.layout.activity_main);
+            mPatternLockView = (PatternLockView)findViewById(R.id.pattern_lock_view);
+            mPatternLockView.addPatternLockListener(new PatternLockViewListener() {
+                @Override
+                public void onStarted() {
+
+                }
+
+                @Override
+                public void onProgress(List<PatternLockView.Dot> progressPattern) {
+
+                }
+
+                @Override
+                public void onComplete(List<PatternLockView.Dot> pattern) {
+                    final_pattern = PatternLockUtils .patternToString(mPatternLockView,pattern);
+
+                }
+
+                @Override
+                public void onCleared() {
+
+                }
+            });
+
+
+
+
+            Button btnSetup = (Button)findViewById(R.id.btnSetearPatron);
+            btnSetup.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Paper.book().write(save_pattern_key, final_pattern);
+                    Toast.makeText(CrearPatron.this, "Save pattern okay!", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(CrearPatron.this,Principal.class); //clase de la activity para confirmar patron
+                    startActivity(intent);
+                }
+            });
         }
     }
-
+}
