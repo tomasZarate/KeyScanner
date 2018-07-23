@@ -32,5 +32,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-vision:15.0.2'
     implementation 'com.google.zxing:core:3.3.0'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
+    implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
+    implementation 'io.paperdb:paperdb:2.6'
 
 }
