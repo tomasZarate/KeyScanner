@@ -14,6 +14,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -103,6 +104,15 @@ public class EscanearRedesFragment extends Fragment {
         mDbHelper = new WifiNetworksDB(getActivity().getApplicationContext());
 
         actualizarLista();
+        final Handler hand = new Handler();
+        Runnable hilo = new Runnable() {
+            @Override
+            public void run() {
+                actualizarLista();
+                hand.postDelayed(this,1000);
+            }
+        };
+        hand.postDelayed(hilo,1000);
     }
 
     @Override
