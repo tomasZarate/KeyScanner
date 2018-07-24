@@ -161,7 +161,7 @@ public class RedesGuardadasFragment extends Fragment {
 
         }catch(Exception ex){}
 
-        adaptador.notifyDataSetChanged();
+        cargarRedes();
     }
 
     private void cargarRedes(){
@@ -180,7 +180,7 @@ public class RedesGuardadasFragment extends Fragment {
                 null,
                 null,
                 null);
-
+        listaBBDD.clear();
         while(cursor.moveToNext()) {
             String name = cursor.getString(
                     cursor.getColumnIndexOrThrow(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE));

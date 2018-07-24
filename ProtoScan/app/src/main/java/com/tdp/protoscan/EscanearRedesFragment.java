@@ -156,9 +156,9 @@ public class EscanearRedesFragment extends Fragment {
         List<ScanResult> resultados=new ArrayList<>();
         IntentFilter scanIntent = new IntentFilter();
         scanIntent.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION);
-        getActivity().getApplicationContext().registerReceiver(mWifiScanResultReceiver, scanIntent);
+        getContext().registerReceiver(mWifiScanResultReceiver, scanIntent);
 
-        if (getActivity().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+        if (getContext().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 0x12345);
         }
         else{
@@ -170,10 +170,10 @@ public class EscanearRedesFragment extends Fragment {
             wifiManager.setWifiEnabled(true);
         }
 
-        LocationManager lm= (LocationManager) getActivity().getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        LocationManager lm= (LocationManager) getContext().getSystemService(Context.LOCATION_SERVICE);
 
         if (lm != null && !lm.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-            Toast.makeText(getActivity().getApplicationContext(), "Por favor, active la ubicacion", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Por favor, active la ubicacion", Toast.LENGTH_LONG).show();
         }
 
         return resultados;
