@@ -116,12 +116,21 @@ public class RedesGuardadasFragment extends Fragment {
                         generarQR();
                         break;
                     case 1:
-                        //Compartir contraseña
+                        mostrarPassword();
                         break;
                 }
             }
         });
         builder.create().show();
+
+    }
+
+    private void mostrarPassword() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Contraseña: "+redActual.getNombre());
+        builder.setMessage(redActual.getPassword());
+        builder.show();
 
     }
 
