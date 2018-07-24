@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,12 +124,26 @@ public class MainActivity extends AppCompatActivity {
             btnCambiarPatron.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent intent = new Intent(v.getContext(), PatronActivity.class);
-                    intent.putExtra("Eliminar Patron","nulo");
-                    startActivity(intent);
+                    startActivityForResult(intent, 1);
+                    }
 
-                }});
+                });
+        }
+
+        public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+            super.onActivityResult(requestCode, resultCode, intent);
+            if (requestCode == 1) {
+                switch (resultCode) {
+                    case RESULT_OK:
+                        Intent i = new Intent(this.getContext(), PatronActivity.class);
+                        i.putExtra("Eliminar Patron", "nulo");
+                        startActivity(i);
+                }
+            }
         }
     }
+
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
