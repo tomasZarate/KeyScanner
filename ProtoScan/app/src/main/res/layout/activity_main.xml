@@ -22,8 +22,9 @@
             android:layout_weight="1"
             android:background="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|enterAlways"
+            app:logo="@mipmap/ic_launcher_round"
             app:popupTheme="@style/AppTheme.PopupOverlay"
-            app:title="@string/app_name">
+            app:title="  ProtoScan">
 
         </android.support.v7.widget.Toolbar>
 

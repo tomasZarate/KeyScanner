@@ -24,5 +24,17 @@
         android:layout_below="@+id/pattern_lock_view"
         android:layout_centerHorizontal="true"/>
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="283dp"
+        android:layout_height="91dp"
+        android:layout_above="@+id/pattern_lock_view"
+        android:layout_centerHorizontal="true"
+        android:text="Para proteger sus contraseñas se le solicitara este patron cada vez que desee compartir o eliminar alguna de sus redes guardadas o favoritas"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#FFFFFF"
+        android:textSize="16dp" />
+
 
 </RelativeLayout>
