@@ -96,11 +96,9 @@ public class RedesGuardadasFragment extends Fragment {
 
                 if(data!=null) {
                     int resultadoPatron = data.getExtras().getInt("resultado");
-                    System.out.println(resultadoPatron);
                     if (resultadoPatron == 1)
                         seleccionarOpcion();
                 }
-                else System.out.println("Holi");
         }
     }
 
