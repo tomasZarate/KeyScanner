@@ -115,6 +115,19 @@ public class MainActivity extends AppCompatActivity {
             return rootView;
         }
 
+        @Override
+        public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+
+            Button btnCambiarPatron = getActivity().findViewById(R.id.btnCambiarPatron);
+            btnCambiarPatron.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), PatronActivity.class);
+                    intent.putExtra("Eliminar Patron","nulo");
+                    startActivity(intent);
+
+                }});
+        }
     }
 
     /**

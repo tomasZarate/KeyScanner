@@ -65,12 +65,6 @@ public class RedesGuardadasFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btnCambiarPatron = getActivity().findViewById(R.id.btnCambiarPatron);
-        btnCambiarPatron.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), PatronActivity.class);
-                startActivity(intent);
-            }});
 
         lvRedes = getActivity().findViewById(R.id.listViewRG);
         lvRedes.setOnItemClickListener(new AdapterView.OnItemClickListener() {

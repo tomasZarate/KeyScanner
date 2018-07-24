@@ -25,7 +25,16 @@ public class PatronActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_patron);
         Paper.init(this);
-        final String save_pattern = Paper.book().read(save_pattern_key);
+        final String save_pattern;
+        getIntent().putExtra("","");
+        String extra = getIntent().getExtras().getString("Eliminar Patron");
+        if(extra!=null){
+            save_pattern = null;
+        }
+        else {
+            save_pattern = Paper.book().read(save_pattern_key);
+        }
+
         if(save_pattern != null && !save_pattern.equals("null"))
         {
             setContentView(R.layout.activity_verificar_patron); //actividad para confirmar el patron
@@ -80,7 +89,6 @@ public class PatronActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(List<PatternLockView.Dot> pattern) {
                     final_pattern = PatternLockUtils.patternToString(mPatternLockView,pattern);
-
                 }
 
                 @Override
@@ -98,8 +106,7 @@ public class PatronActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Paper.book().write(save_pattern_key, final_pattern);
                     Toast.makeText(PatronActivity.this, "Save pattern okay!", Toast.LENGTH_SHORT).show();
-                    //Intent intent = new Intent(CrearPatronActivity.this,Principal.class); //clase de la activity para confirmar patron
-                    //startActivity(intent);
+                    finish();
                 }
             });
         }

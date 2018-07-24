@@ -25,13 +25,5 @@
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <Button
-        android:id="@+id/btnCambiarPatron"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/pattern_lock_view"
-        android:layout_centerHorizontal="true"
-        android:text="Cambiar Patron"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="326dp" />
+
 </android.support.constraint.ConstraintLayout>
