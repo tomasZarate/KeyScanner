@@ -1,13 +1,8 @@
 package com.tdp.protoscan;
 
-import android.support.v7.app.AppCompatActivity;
-
-import com.andrognito.patternlockview.PatternLockView;
-
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -21,7 +16,7 @@ import java.util.List;
 import io.paperdb.Paper;
 
 
-public class CrearPatronActivity extends AppCompatActivity {
+public class PatronActivity extends AppCompatActivity {
 
     String save_pattern_key = "pattern_code";
     String final_pattern = "";
@@ -32,7 +27,6 @@ public class CrearPatronActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crear_patron);
         Paper.init(this);
         final String save_pattern = Paper.book().read(save_pattern_key);
-
         if(save_pattern != null && !save_pattern.equals("null"))
         {
             setContentView(R.layout.activity_verificar_patron); //actividad para confirmar el patron
@@ -52,12 +46,13 @@ public class CrearPatronActivity extends AppCompatActivity {
                 public void onComplete(List<PatternLockView.Dot> pattern) {
                     final_pattern = PatternLockUtils.patternToString(mPatternLockView,pattern);
                     if(final_pattern.equals(save_pattern)){
-                        Toast.makeText(CrearPatronActivity.this, "Password Correct!", Toast.LENGTH_SHORT).show();
-                        //Intent intent = new Intent(CrearPatronActivity.this,ActividadDesbloqueada.class); //Aca iria el cuadro flotante
-                        //startActivity(intent);
-
-
-                    }else{ Toast.makeText(CrearPatronActivity.this, "Password Incorrect!", Toast.LENGTH_SHORT).show();}
+                        Toast.makeText(PatronActivity.this, "Password Correct!", Toast.LENGTH_SHORT).show();
+                        //Devuelvo un resultado positivo
+                        Intent data = new Intent();
+                        data.putExtra("resultado",1);
+                        PatronActivity.this.setResult(RESULT_OK,data);
+                        finish();
+                    }else{ Toast.makeText(PatronActivity.this, "Password Incorrect!", Toast.LENGTH_SHORT).show();}
 
 
                 }
@@ -103,7 +98,7 @@ public class CrearPatronActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     Paper.book().write(save_pattern_key, final_pattern);
-                    Toast.makeText(CrearPatronActivity.this, "Save pattern okay!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PatronActivity.this, "Save pattern okay!", Toast.LENGTH_SHORT).show();
                     //Intent intent = new Intent(CrearPatronActivity.this,Principal.class); //clase de la activity para confirmar patron
                     //startActivity(intent);
                 }

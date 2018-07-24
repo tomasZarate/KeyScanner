@@ -57,6 +57,7 @@ public class EscanearRedesFragment extends Fragment {
     private static final int RC_EDITOR = 9005;
     private String redActual;
 
+
     public EscanearRedesFragment() {
     }
 

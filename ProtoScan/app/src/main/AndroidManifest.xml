@@ -50,10 +50,9 @@
             android:permission="" />
 
         <activity
-            android:name=".CrearPatronActivity"
+            android:name=".PatronActivity"
             android:label="@string/title_activity_crear_patron"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".VerificarPatronActivity"></activity>
     </application>
 
 </manifest>

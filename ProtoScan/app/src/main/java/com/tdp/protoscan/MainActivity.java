@@ -115,19 +115,6 @@ public class MainActivity extends AppCompatActivity {
             return rootView;
         }
 
-        @Override
-        public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-            super.onViewCreated(view, savedInstanceState);
-
-            Button botonCrearPatron = getActivity().findViewById(R.id.buttonPattern);
-            botonCrearPatron.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getContext(),CrearPatronActivity.class);
-                    startActivity(intent);
-                }
-            });
-        }
     }
 
     /**

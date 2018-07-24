@@ -1,6 +1,7 @@
 package com.tdp.protoscan;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -30,6 +31,7 @@ public class RedesGuardadasFragment extends Fragment {
     protected DataBaseAdapter adaptador;
     private ListView lvRedes;
     private ElementoBBDD redActual;
+    private static final int RC_PATRON = 8001;
 
     //Base de datos
     protected WifiNetworksDB mDbHelper;
@@ -65,7 +67,9 @@ public class RedesGuardadasFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
 
                 redActual = listaBBDD.get(position);
-                seleccionarOpcion();
+                Intent intent = new Intent(getContext(),PatronActivity.class);
+                startActivityForResult(intent,RC_PATRON);
+                //seleccionarOpcion();
 
             }
         });
@@ -77,6 +81,22 @@ public class RedesGuardadasFragment extends Fragment {
 
         imagenqr= getActivity().findViewById(R.id.qrImage);
         cargarRedes();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case RC_PATRON:
+
+                if(data!=null) {
+                    int resultadoPatron = data.getExtras().getInt("resultado");
+                    System.out.println(resultadoPatron);
+                    if (resultadoPatron == 1)
+                        seleccionarOpcion();
+                }
+                else System.out.println("Holi");
+        }
     }
 
     private void seleccionarOpcion() {
