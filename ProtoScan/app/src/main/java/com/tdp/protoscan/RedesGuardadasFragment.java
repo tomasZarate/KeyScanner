@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -25,7 +26,11 @@ import com.tdp.protoscan.database.WifiNetworksDB;
 
 import java.util.ArrayList;
 
+import io.paperdb.Paper;
+
 public class RedesGuardadasFragment extends Fragment {
+
+    protected Button btnCambiarPatron;
 
     protected ArrayList<ElementoBBDD> listaBBDD; //Lista con password
     protected DataBaseAdapter adaptador;
@@ -60,6 +65,12 @@ public class RedesGuardadasFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        btnCambiarPatron = getActivity().findViewById(R.id.btnCambiarPatron);
+        btnCambiarPatron.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), PatronActivity.class);
+                startActivity(intent);
+            }});
 
         lvRedes = getActivity().findViewById(R.id.listViewRG);
         lvRedes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -198,4 +209,6 @@ public class RedesGuardadasFragment extends Fragment {
         bitmap.setPixels(pixels, 0, 500, 0, 0, bitMatrixWidth, bitMatrixHeight);
         return bitmap;
     }
+
+
 }

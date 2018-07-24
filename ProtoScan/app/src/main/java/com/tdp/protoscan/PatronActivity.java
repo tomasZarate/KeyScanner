@@ -17,7 +17,6 @@ import io.paperdb.Paper;
 
 
 public class PatronActivity extends AppCompatActivity {
-
     String save_pattern_key = "pattern_code";
     String final_pattern = "";
     PatternLockView mPatternLockView;
@@ -105,4 +104,5 @@ public class PatronActivity extends AppCompatActivity {
             });
         }
     }
+
 }
