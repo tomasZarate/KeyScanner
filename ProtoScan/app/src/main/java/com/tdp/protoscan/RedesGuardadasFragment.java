@@ -104,7 +104,7 @@ public class RedesGuardadasFragment extends Fragment {
 
     private void seleccionarOpcion() {
 
-        String [] items={"Generar QR","Compartir contraseña","Eliminar red"};
+        String [] items={"Generar QR","Compartir contraseña"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Compartir red");
         builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -118,21 +118,11 @@ public class RedesGuardadasFragment extends Fragment {
                     case 1:
                         mostrarPassword();
                         break;
-                    case 2:
-                        eliminarRed();
                 }
             }
         });
         builder.create().show();
 
-    }
-
-    private void eliminarRed() {
-
-        //Aca va todo
-
-        
-        adaptador.notifyDataSetChanged(); //Actualiza el view
     }
 
     private void mostrarPassword() {
