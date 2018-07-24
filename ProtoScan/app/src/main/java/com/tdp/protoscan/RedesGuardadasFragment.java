@@ -104,7 +104,7 @@ public class RedesGuardadasFragment extends Fragment {
 
     private void seleccionarOpcion() {
 
-        String [] items={"Generar QR","Compartir contraseña"};
+        String [] items={"Generar QR","Compartir contraseña","Eliminar red"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Compartir red");
         builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -117,6 +117,9 @@ public class RedesGuardadasFragment extends Fragment {
                         break;
                     case 1:
                         mostrarPassword();
+                        break;
+                    case 2:
+                        eliminarRed();
                         break;
                 }
             }
@@ -146,6 +149,19 @@ public class RedesGuardadasFragment extends Fragment {
             e.printStackTrace();
         }
 
+    }
+
+    public void eliminarRed() {
+        db = mDbHelper.getWritableDatabase();
+        try{
+            db.delete(WifiNetworkContract.FeedEntry.TABLE_NAME,
+                    " title = ?",
+                    new String[] { String.valueOf (redActual.getNombre()) });
+            db.close();
+
+        }catch(Exception ex){}
+
+        adaptador.notifyDataSetChanged();
     }
 
     private void cargarRedes(){
