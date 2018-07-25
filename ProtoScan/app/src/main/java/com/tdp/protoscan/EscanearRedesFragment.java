@@ -334,8 +334,10 @@ public class EscanearRedesFragment extends Fragment {
                 wifiManager.disconnect();
                 wifiManager.enableNetwork(i.networkId, true);
                 wifiManager.reconnect();
-                if(!existeEnBD(ssid))
+                if(!existeEnBD(ssid)) {
                     agregar(ssid, pass);
+
+                }
                 return true;
             }
         }

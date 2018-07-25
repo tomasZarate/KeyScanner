@@ -55,7 +55,15 @@ public class QRScanActivity extends AppCompatActivity {
 
         int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         if (rc == PackageManager.PERMISSION_GRANTED) {
-            createCameraSource(true, false);
+            boolean flash = false;
+            boolean foco = true;
+            cameraSource = new CameraSource.Builder(this, barcode)
+                    .setFacing(CameraSource.CAMERA_FACING_BACK)
+                    .setRequestedFps(24)
+                    .setFlashMode(flash ? Camera.Parameters.FLASH_MODE_TORCH : null)
+                    .setFocusMode(foco ? Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE : null)
+                    .setRequestedPreviewSize(1920, 1024)
+                    .build();
         } else {
             requestCameraPermission();
         }
