@@ -55,6 +55,8 @@ public class EscanearRedesFragment extends Fragment {
     private static final int RC_OCR_CAPTURE = 9003;
     private static final int RC_QR_CAPTURE = 9004;
     private static final int RC_EDITOR = 9005;
+    private static final int RC_CAMERA_PERMISSION = 1333;
+    private static final int RC_LOCATION_PERMISSION = 1444;
     private String redActual;
 
 
@@ -159,7 +161,7 @@ public class EscanearRedesFragment extends Fragment {
         getContext().registerReceiver(mWifiScanResultReceiver, scanIntent);
 
         if (getContext().checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, 12345);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION}, RC_LOCATION_PERMISSION);
         }
         else{
             if(wifiManager.startScan()){
@@ -181,7 +183,7 @@ public class EscanearRedesFragment extends Fragment {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 12345) {
+        if (requestCode == RC_LOCATION_PERMISSION) {
             for (int grantResult : grantResults) {
                 if (grantResult != PackageManager.PERMISSION_GRANTED) {
                     return;
@@ -189,12 +191,13 @@ public class EscanearRedesFragment extends Fragment {
             }
             getWifi();
         }
-        if(requestCode==0x1333){
+        if(requestCode==RC_CAMERA_PERMISSION){
             for (int grantResult : grantResults) {
                 if (grantResult != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
             }
+
         }
     }
 
@@ -223,13 +226,6 @@ public class EscanearRedesFragment extends Fragment {
         builder.create().show();
     }
 
-    private void lanzarQR() {
-
-        Intent intent = new Intent(getActivity(),QRScanActivity.class);
-        startActivityForResult(intent, RC_QR_CAPTURE);
-
-    }
-
     private void ingresarPassword(String input) {
 
         Intent intent=new Intent(getActivity(),EditarPasswordActivity.class);
@@ -238,11 +234,15 @@ public class EscanearRedesFragment extends Fragment {
 
     }
 
+    private void lanzarQR() {
+
+        Intent intent = new Intent(getActivity(),QRScanActivity.class);
+        startActivityForResult(intent, RC_QR_CAPTURE);
+
+    }
+
     private void lanzarOCR(){
 
-        if (getActivity().checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, 0x1333);
-        }
         Intent intent = new Intent(getActivity(), OcrCaptureActivity.class);
         intent.putExtra(OcrCaptureActivity.AutoFocus, true);
         intent.putExtra(OcrCaptureActivity.UseFlash, false);
