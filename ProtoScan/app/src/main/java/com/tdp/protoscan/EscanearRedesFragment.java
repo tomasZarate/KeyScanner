@@ -324,27 +324,29 @@ public class EscanearRedesFragment extends Fragment {
         }
     }
 
-
-
     private boolean conectarRed(String ssid,String pass){
         WifiConfiguration conf = new WifiConfiguration();
         conf.SSID = "\"" + ssid + "\"";
         conf.preSharedKey="\""+ pass +"\"";
-        wifiManager.addNetwork(conf);
+        int id= wifiManager.addNetwork(conf);
         List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
         for( WifiConfiguration i : list ) {
-            if(i.SSID != null && i.SSID.equals("\"" + ssid + "\"")) {
+            if(id == i.networkId) {
                 wifiManager.disconnect();
                 wifiManager.enableNetwork(i.networkId, true);
-                wifiManager.reconnect();
-                if(!existeEnBD(ssid)) {
-                    agregar(ssid, pass);
-                    actualizarPantalla();
+                boolean conecto = wifiManager.reconnect();
+                if(conecto && i.status==0){
 
-                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                    getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                    if(!existeEnBD(ssid)) {
+                        agregar(ssid, pass);
+                        actualizarPantalla();
+
+                        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
+                    }
+                    return true;
                 }
-                return true;
             }
         }
         return false;
