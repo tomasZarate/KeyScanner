@@ -1,13 +1,16 @@
 package com.tdp.protoscan;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,10 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
 import com.tdp.protoscan.database.FavsNetworksDB;
 import com.tdp.protoscan.database.WifiNetworkContract;
 import com.tdp.protoscan.database.WifiNetworksDB;
@@ -104,7 +111,6 @@ public class RedesFavoritasFragment extends Fragment {
                 redActual = listaBBDD.get(position);
                 Intent intent = new Intent(getContext(),PatronActivity.class);
                 startActivityForResult(intent,RC_PATRON);
-                //seleccionarOpcion();
 
             }
         });
@@ -116,6 +122,45 @@ public class RedesFavoritasFragment extends Fragment {
 
         imagenqr= getActivity().findViewById(R.id.qrImage);
         cargarRedesFavoritas();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode){
+            case RC_PATRON:
+
+                if(data!=null) {
+                    int resultadoPatron = data.getExtras().getInt("resultado");
+                    if (resultadoPatron == 1)
+                        seleccionarOpcion();
+                }
+        }
+    }
+
+    private void seleccionarOpcion() {
+        String [] items={"Generar QR","Compartir contraseña","Eliminar de favoritos"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Compartir red");
+        builder.setItems(items, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                // Do anything you want here
+                //El parametro witch indica que opción se tocó (Usar un case)
+                switch(which){
+                    case 0:
+                        generarQR();
+                        break;
+                    case 1:
+                        mostrarPassword();
+                        break;
+                    case 2:
+                        eliminarRed();
+                        break;
+                }
+            }
+        });
+        builder.create().show();
     }
 
     private void cargarRedesFavoritas() {
@@ -147,6 +192,77 @@ public class RedesFavoritasFragment extends Fragment {
         adaptador.notifyDataSetChanged();
 
     }
+
+    public void eliminarRed() {
+        db = mDbHelper.getWritableDatabase();
+        try{
+            db.delete(WifiNetworkContract.FeedEntry.TABLE_NAME,
+                    " title = ?",
+                    new String[] { String.valueOf (redActual.getNombre()) });
+            db.close();
+
+        }catch(Exception ex){}
+
+        cargarRedesFavoritas();
+    }
+
+    private void mostrarPassword() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("Contraseña: "+redActual.getNombre());
+        builder.setMessage(redActual.getPassword());
+        builder.show();
+
+    }
+
+    private void generarQR() {
+
+        try {
+            Bitmap bitmap;
+
+            bitmap = TextToImageEncode(redActual.getPassword());
+
+            imagenqr.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private Bitmap TextToImageEncode(String Value) throws WriterException {
+        BitMatrix bitMatrix;
+        try {
+            bitMatrix = new MultiFormatWriter().encode(
+                    Value,
+                    BarcodeFormat.DATA_MATRIX.QR_CODE,
+                    QRcodeWidth, QRcodeWidth, null
+            );
+
+        } catch (IllegalArgumentException Illegalargumentexception) {
+
+            return null;
+        }
+        int bitMatrixWidth = bitMatrix.getWidth();
+
+        int bitMatrixHeight = bitMatrix.getHeight();
+
+        int[] pixels = new int[bitMatrixWidth * bitMatrixHeight];
+
+        for (int y = 0; y < bitMatrixHeight; y++) {
+            int offset = y * bitMatrixWidth;
+
+            for (int x = 0; x < bitMatrixWidth; x++) {
+
+                pixels[offset + x] = bitMatrix.get(x, y) ?
+                        getResources().getColor(R.color.QRCodeBlackColor):getResources().getColor(R.color.QRCodeWhiteColor);
+            }
+        }
+        Bitmap bitmap = Bitmap.createBitmap(bitMatrixWidth, bitMatrixHeight, Bitmap.Config.ARGB_4444);
+
+        bitmap.setPixels(pixels, 0, 500, 0, 0, bitMatrixWidth, bitMatrixHeight);
+        return bitmap;
+    }
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

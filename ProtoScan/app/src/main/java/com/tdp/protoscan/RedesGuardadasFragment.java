@@ -8,6 +8,10 @@ import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -31,6 +35,7 @@ import com.tdp.protoscan.database.WifiNetworkContract;
 import com.tdp.protoscan.database.WifiNetworksDB;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import io.paperdb.Paper;
 
@@ -51,8 +56,6 @@ public class RedesGuardadasFragment extends Fragment {
 
     //QR
     private final static int QRcodeWidth = 500 ;
-
-    private ImageView imagenqr;
 
     public RedesGuardadasFragment() {
     }
@@ -81,7 +84,6 @@ public class RedesGuardadasFragment extends Fragment {
                 redActual = listaBBDD.get(position);
                 Intent intent = new Intent(getContext(),PatronActivity.class);
                 startActivityForResult(intent,RC_PATRON);
-                //seleccionarOpcion();
 
             }
         });
@@ -92,7 +94,6 @@ public class RedesGuardadasFragment extends Fragment {
         mDbHelper = new WifiNetworksDB(getActivity().getApplicationContext());
         favsHelper = new FavsNetworksDB(getContext());
 
-        imagenqr= getActivity().findViewById(R.id.qrImage);
         cargarRedes();
     }
 
@@ -151,7 +152,7 @@ public class RedesGuardadasFragment extends Fragment {
         db.insert(WifiNetworkContract.FeedEntry.TABLE_NAME, null, values); //-1 si hubo error en insertar
         db.close();
 
-        actualizarPantalla();
+        //actualizarPantalla();
 
     }
 
@@ -219,10 +220,16 @@ public class RedesGuardadasFragment extends Fragment {
 
         try {
             Bitmap bitmap;
-
             bitmap = TextToImageEncode(redActual.getPassword());
 
-            imagenqr.setImageBitmap(bitmap);
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            final View imagenqr = inflater.inflate(R.layout.layout_qr_image,null);
+
+            Drawable d = new BitmapDrawable(getResources(), bitmap);
+            imagenqr.setBackground(d);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setView(imagenqr);
+            builder.show();
         } catch (WriterException e) {
             e.printStackTrace();
         }
@@ -267,6 +274,8 @@ public class RedesGuardadasFragment extends Fragment {
             listaBBDD.add(new ElementoBBDD(name,pass));
         }
 
+
+
         cursor.close();
         adaptador.notifyDataSetChanged();
     }
@@ -304,6 +313,7 @@ public class RedesGuardadasFragment extends Fragment {
         bitmap.setPixels(pixels, 0, 500, 0, 0, bitMatrixWidth, bitMatrixHeight);
         return bitmap;
     }
+
 
 
 }
