@@ -40,7 +40,7 @@ public class WifiAdapter extends ArrayAdapter{
         // Recogemos el TextView para mostrar el nombre y establecemos el
         // nombre.
         TextView nombre = item.findViewById(R.id.ssidField);
-        nombre.setText("Nombre red: "+datos.get(position).getNombreRed());
+        nombre.setText(datos.get(position).getNombreRed());
 
         // Recogemos el TextView para mostrar el número de celda y lo
         // establecemos.

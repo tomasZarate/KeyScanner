@@ -1,7 +1,10 @@
 package com.tdp.protoscan;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -10,8 +13,10 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -21,6 +26,7 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
+import com.tdp.protoscan.database.FavsNetworksDB;
 import com.tdp.protoscan.database.WifiNetworkContract;
 import com.tdp.protoscan.database.WifiNetworksDB;
 
@@ -40,6 +46,7 @@ public class RedesGuardadasFragment extends Fragment {
 
     //Base de datos
     protected WifiNetworksDB mDbHelper;
+    protected FavsNetworksDB favsHelper;
     protected SQLiteDatabase db;
 
     //QR
@@ -83,6 +90,7 @@ public class RedesGuardadasFragment extends Fragment {
         lvRedes.setAdapter(adaptador);
 
         mDbHelper = new WifiNetworksDB(getActivity().getApplicationContext());
+        favsHelper = new FavsNetworksDB(getContext());
 
         imagenqr= getActivity().findViewById(R.id.qrImage);
         cargarRedes();
@@ -104,7 +112,7 @@ public class RedesGuardadasFragment extends Fragment {
 
     private void seleccionarOpcion() {
 
-        String [] items={"Generar QR","Compartir contraseña","Eliminar red"};
+        String [] items={"Generar QR","Compartir contraseña","Agregar a Favoritos","Eliminar red"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Compartir red");
         builder.setItems(items, new DialogInterface.OnClickListener() {
@@ -119,6 +127,10 @@ public class RedesGuardadasFragment extends Fragment {
                         mostrarPassword();
                         break;
                     case 2:
+                        if(!existeEnBD(redActual.getNombre()))
+                            agregarFavoritos(redActual.getNombre(),redActual.getPassword());
+                        break;
+                    case 3:
                         eliminarRed();
                         break;
                 }
@@ -126,6 +138,72 @@ public class RedesGuardadasFragment extends Fragment {
         });
         builder.create().show();
 
+    }
+
+    private void agregarFavoritos(String nombre, String pass) {
+
+        db = favsHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE, nombre);
+        values.put(WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE, pass);
+
+        db.insert(WifiNetworkContract.FeedEntry.TABLE_NAME, null, values); //-1 si hubo error en insertar
+        db.close();
+
+        actualizarPantalla();
+
+    }
+
+    private void actualizarPantalla() {
+        int orientacion =  ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
+
+        switch (orientacion) {
+            case Surface.ROTATION_0:
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                break;
+            case Surface.ROTATION_90:
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                break;
+            case Surface.ROTATION_180:
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+
+            case Surface.ROTATION_270:
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                break;
+        }
+
+    }
+
+    public boolean existeEnBD(String key){
+
+        db = favsHelper.getReadableDatabase();
+
+        String[] projection = {WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE, WifiNetworkContract.FeedEntry.COLUMN_NAME_SUBTITLE};
+
+        Cursor cursor = db.query(WifiNetworkContract.FeedEntry.TABLE_NAME,
+                projection,
+                null,//selection,
+                null,
+                null,
+                null,
+                null,
+                null);
+
+        boolean encontre = false;
+
+        while(cursor.moveToNext() && !encontre) {
+            String item = cursor.getString(
+                    cursor.getColumnIndexOrThrow(WifiNetworkContract.FeedEntry.COLUMN_NAME_TITLE));
+            if(item.equals(key)) encontre = true;
+        }
+
+        db.close();
+        return encontre;
     }
 
     private void mostrarPassword() {

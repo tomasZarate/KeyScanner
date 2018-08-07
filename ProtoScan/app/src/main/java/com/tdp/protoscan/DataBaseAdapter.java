@@ -36,7 +36,7 @@ public class DataBaseAdapter extends ArrayAdapter {
         // Recogemos el TextView para mostrar el nombre y establecemos el
         // nombre.
         TextView nombre = item.findViewById(R.id.nameField);
-        nombre.setText("Nombre red: "+datos.get(position).getNombre());
+        nombre.setText(""+datos.get(position).getNombre());
 
         // Recogemos el TextView para mostrar el número de celda y lo
         // establecemos.

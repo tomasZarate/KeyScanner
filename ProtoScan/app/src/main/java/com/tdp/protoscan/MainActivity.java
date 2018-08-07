@@ -163,7 +163,8 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return RedesGuardadasFragment.newInstance();
                 case 2:
-                    return PlaceholderFragment.newInstance(position+1);
+                    return RedesFavoritasFragment.newInstance();
+                    //return PlaceholderFragment.newInstance(position+1);
             }
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
