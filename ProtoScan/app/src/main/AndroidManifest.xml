@@ -21,7 +21,6 @@
             android:theme="@style/Toolbar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -41,18 +40,20 @@
             android:parentActivityName=".MainActivity" />
         <activity
             android:name=".QRScanActivity"
-            android:label="Read QR" />
-
+            android:label="Read QR"/>
+        <activity
+            android:name=".PatronActivity"
+            android:label="@string/title_activity_crear_patron"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity"/>
         <receiver
             android:name=".WifiScanReceiver"
             android:enabled="true"
             android:exported="true"
             android:permission="" />
 
-        <activity
-            android:name=".PatronActivity"
-            android:label="@string/title_activity_crear_patron"
-            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

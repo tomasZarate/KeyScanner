@@ -71,8 +71,12 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_about:
                 // User chose the "About" item, show the app settings UI...
-                Intent intent = new Intent(this, AboutActivity.class);
-                startActivity(intent);
+                Intent intentAbout = new Intent(this, AboutActivity.class);
+                startActivity(intentAbout);
+                return true;
+            case R.id.action_settings:
+                Intent intentSettings = new Intent(this,SettingsActivity.class);
+                startActivity(intentSettings);
                 return true;
             default:
                 // If we got here, the user's action was not recognized.
