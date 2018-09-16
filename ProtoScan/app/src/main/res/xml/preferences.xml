@@ -18,10 +18,7 @@
         android:key="pref_key_pattern_settings">
 
         <Preference android:title="Cambiar patron" >
-            <intent
-                android:action="android.intent.action.VIEW"
-                android:targetPackage="com.tdp.protoscan"
-                android:targetClass="com.tdp.protoscan.PatronActivity"/>
+
         </Preference>
     </PreferenceCategory>
 </PreferenceScreen>

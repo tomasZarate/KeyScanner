@@ -1,12 +1,13 @@
 package com.tdp.protoscan;
 
-import android.content.Intent;
-import android.preference.Preference;
+import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.widget.Toolbar;
 
-public class SettingsActivity extends PreferenceActivity {
+
+public class SettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,8 +16,6 @@ public class SettingsActivity extends PreferenceActivity {
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
     }
-
-
 
     public static class SettingsFragment extends PreferenceFragment {
 
@@ -30,8 +29,9 @@ public class SettingsActivity extends PreferenceActivity {
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.preferences);
 
-            /*Preference pref = (Preference) findPreference("pref_key_pattern_settings");
-            pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            //Preference pref = (Preference) findPreference("pref_key_pattern_settings");
+
+            /*pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent intentPatron = new Intent(getActivity(),PatronActivity.class);
@@ -39,6 +39,7 @@ public class SettingsActivity extends PreferenceActivity {
                     return true;
                 }
             });*/
+
         }
         /*
         * <intent
@@ -47,19 +48,8 @@ public class SettingsActivity extends PreferenceActivity {
                 android:targetClass="com.tdp.protoscan.PatronActivity"/>
         *
         * */
-       /* @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-            super.onActivityResult(requestCode, resultCode, intent);
-            if (requestCode == 5544) {
-                switch (resultCode) {
-                    case RESULT_OK:
-                        Intent i = new Intent(this.getContext(), PatronActivity.class);
-                        i.putExtra("Eliminar Patron", "nulo");
-                        startActivity(i);
-                }
-            }
-        }*/
 
     }
+
 
 }

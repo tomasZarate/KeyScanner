@@ -47,11 +47,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName=".MainActivity"
+            />
         <receiver
             android:name=".WifiScanReceiver"
             android:enabled="true"
-            android:exported="true"
             android:permission="" />
 
     </application>
