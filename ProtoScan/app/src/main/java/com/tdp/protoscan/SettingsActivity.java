@@ -1,6 +1,8 @@
 package com.tdp.protoscan;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -34,27 +36,32 @@ public class SettingsActivity extends AppCompatActivity {
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.preferences);
 
-            //Preference pref = (Preference) findPreference("pref_key_pattern_settings");
+            Preference pref = (Preference) findPreference("pref_key_pattern_settings");
 
-            /*pref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            Preference userButton = (Preference) findPreference("Cambiar patron");
+
+            userButton.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     Intent intentPatron = new Intent(getActivity(),PatronActivity.class);
                     startActivityForResult(intentPatron, 5544);
                     return true;
                 }
-            });*/
+            });
 
         }
-        /*
-        * <intent
-                android:action="android.intent.action.VIEW"
-                android:targetPackage="com.tdp.protoscan"
-                android:targetClass="com.tdp.protoscan.PatronActivity"/>
-        *
-        * */
 
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+
+            switch (requestCode){
+                case 5544:
+                    Intent intentPatron = new Intent(getActivity(),PatronActivity.class);
+                    intentPatron.putExtra("Eliminar Patron", "nulo");
+                    startActivity(intentPatron);
+            }
+        }
     }
-
 
 }

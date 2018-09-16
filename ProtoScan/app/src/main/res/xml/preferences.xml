@@ -17,7 +17,8 @@
         android:title="Ajustes de patrón"
         android:key="pref_key_pattern_settings">
 
-        <Preference android:title="Cambiar patron" >
+        <Preference android:title="Cambiar patron"
+                    android:key="Cambiar patron">
 
         </Preference>
     </PreferenceCategory>

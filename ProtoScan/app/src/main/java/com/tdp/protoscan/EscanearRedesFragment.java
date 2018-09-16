@@ -32,6 +32,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
+import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.tdp.protoscan.OCR.OcrCaptureActivity;
 import com.tdp.protoscan.database.WifiNetworkContract;
