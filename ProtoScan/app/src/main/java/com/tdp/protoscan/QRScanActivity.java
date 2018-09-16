@@ -5,8 +5,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -55,8 +57,11 @@ public class QRScanActivity extends AppCompatActivity {
 
         int rc = ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
         if (rc == PackageManager.PERMISSION_GRANTED) {
-            boolean flash = false;
-            boolean foco = true;
+            SharedPreferences sharedPref =
+                    PreferenceManager.getDefaultSharedPreferences(this);
+
+            boolean flash = sharedPref.getBoolean(SettingsActivity.KEY_FLASH_PREF,false);
+            boolean foco = sharedPref.getBoolean(SettingsActivity.KEY_AUTOFOCUS_PREF,true);
             cameraSource = new CameraSource.Builder(this, barcode)
                     .setFacing(CameraSource.CAMERA_FACING_BACK)
                     .setRequestedFps(24)

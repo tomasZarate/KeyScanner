@@ -9,6 +9,11 @@ import android.widget.Toolbar;
 
 public class SettingsActivity extends AppCompatActivity {
 
+    public static final String
+            KEY_AUTOFOCUS_PREF = "switch_autofocus";
+    public static final String
+            KEY_FLASH_PREF = "switch_flash";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

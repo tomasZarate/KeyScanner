@@ -10,6 +10,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.hardware.Camera;
 import android.location.LocationManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
@@ -301,6 +302,7 @@ public class EscanearRedesFragment extends Fragment {
                         Toast.makeText(getActivity().getApplicationContext(),"Conexion exitosa", Toast.LENGTH_LONG).show();
                     else
                         Toast.makeText(getActivity().getApplicationContext(),"Fallo la conexion", Toast.LENGTH_LONG).show();
+
                     break;
                 }
                 break;
