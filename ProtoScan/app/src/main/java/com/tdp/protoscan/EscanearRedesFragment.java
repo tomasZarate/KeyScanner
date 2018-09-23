@@ -88,6 +88,7 @@ public class EscanearRedesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 redActual=listaRedes.get(position).getNombreRed();
+                System.out.println("Red actual :"+redActual + ": Red actual");
                 seleccionarEntrada();
             }
         });
@@ -120,7 +121,8 @@ public class EscanearRedesFragment extends Fragment {
         listaRedes.clear();
         adaptador.notifyDataSetChanged();
         for(ScanResult e: redes){
-            listaRedes.add(new ElementoRed(e.SSID,"Intensidad: "+calcularIntensidad(e.level) + " RSSI: "+e.level));
+            if(e.SSID.length()>0)
+                listaRedes.add(new ElementoRed(e.SSID,"Intensidad: "+calcularIntensidad(e.level) + " RSSI: "+e.level));
             adaptador.notifyDataSetChanged();
         }
     }

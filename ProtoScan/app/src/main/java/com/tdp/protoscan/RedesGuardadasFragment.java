@@ -46,6 +46,7 @@ public class RedesGuardadasFragment extends Fragment {
 
     //QR
     private final static int QRcodeWidth = 500 ;
+    private final static int QRcodeHeight = 650 ;
 
     public RedesGuardadasFragment() {
     }
@@ -193,6 +194,8 @@ public class RedesGuardadasFragment extends Fragment {
             imagenqr.setBackground(d);
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setView(imagenqr);
+            //AlertDialog qrAlert = builder.create();
+            //qrAlert.getWindow().setLayout(QRcodeWidth,QRcodeWidth);
             builder.show();
         } catch (WriterException e) {
             e.printStackTrace();
@@ -250,7 +253,7 @@ public class RedesGuardadasFragment extends Fragment {
             bitMatrix = new MultiFormatWriter().encode(
                     Value,
                     BarcodeFormat.DATA_MATRIX.QR_CODE,
-                    QRcodeWidth, QRcodeWidth, null
+                    QRcodeWidth, QRcodeHeight, null
             );
 
         } catch (IllegalArgumentException Illegalargumentexception) {
