@@ -89,6 +89,7 @@ public class PatronActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(List<PatternLockView.Dot> pattern) {
                     final_pattern = PatternLockUtils.patternToString(mPatternLockView,pattern);
+
                 }
 
                 @Override
@@ -104,9 +105,14 @@ public class PatronActivity extends AppCompatActivity {
             btnSetup.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Paper.book().write(save_pattern_key, final_pattern);
-                    Toast.makeText(PatronActivity.this, "Patron guardado con éxito!", Toast.LENGTH_SHORT).show();
-                    finish();
+                    if(final_pattern.length()>1){
+                        Paper.book().write(save_pattern_key, final_pattern);
+                        Toast.makeText(PatronActivity.this, "Patron guardado con éxito!", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                    else
+                        Toast.makeText(PatronActivity.this, "Une al menos 2 puntos", Toast.LENGTH_SHORT).show();
+
                 }
             });
         }

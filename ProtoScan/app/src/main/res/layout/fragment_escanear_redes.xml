@@ -7,21 +7,18 @@
     android:layout_height="match_parent"
     tools:context=".EscanearRedesFragment">
 
-    <Button
-        android:id="@+id/button"
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnScan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="8dp"
-        android:text="Escanear redes"
-        android:textColor="@android:color/background_light"
-        android:theme="@style/miTema"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.927"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="28dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:src="@drawable/wifi_scan_icon"
+        app:layout_constraintBottom_toBottomOf="@+id/listViewRE"
+        app:layout_constraintEnd_toEndOf="@+id/listViewRE" />
 
     <ListView
         android:id="@+id/listViewRE"
