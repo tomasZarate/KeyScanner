@@ -88,7 +88,6 @@ public class EscanearRedesFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 redActual=listaRedes.get(position).getNombreRed();
-                System.out.println("Red actual :"+redActual + ": Red actual");
                 seleccionarEntrada();
             }
         });
