@@ -349,11 +349,10 @@ public class EscanearRedesFragment extends Fragment {
 
                     if(!existeEnBD(ssid)) {
                         agregar(ssid, pass);
-                        actualizarPantalla();
 
-                        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                        /*getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
                         getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-
+                        */
                     }
                     return true;
                 }
@@ -361,31 +360,6 @@ public class EscanearRedesFragment extends Fragment {
         }
         return false;
     }
-
-    private void actualizarPantalla() {
-        int orientacion =  ((WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
-
-        switch (orientacion) {
-            case Surface.ROTATION_0:
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                break;
-            case Surface.ROTATION_90:
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                break;
-            case Surface.ROTATION_180:
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-
-            case Surface.ROTATION_270:
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                break;
-        }
-
-    }
-
 
     //Metodo para agregar a la base de datos
     public void agregar(String nombre, String pass){
@@ -398,6 +372,7 @@ public class EscanearRedesFragment extends Fragment {
         db.insert(WifiNetworkContract.FeedEntry.TABLE_NAME, null, values); //-1 si hubo error en insertar
         db.close();
 
+        getActivity().recreate();
     }
 
     public boolean existeEnBD(String key){

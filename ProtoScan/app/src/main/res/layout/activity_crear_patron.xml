@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/primaryLightColor"
 
-    tools:context="com.tdp.protoscan.CrearPatronActivity">
+    tools:context="com.tdp.protoscan.PatronActivity">
 
     <com.andrognito.patternlockview.PatternLockView
         android:id="@+id/pattern_lock_view"
