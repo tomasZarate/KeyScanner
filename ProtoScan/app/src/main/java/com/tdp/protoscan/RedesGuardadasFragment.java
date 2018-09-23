@@ -1,29 +1,22 @@
 package com.tdp.protoscan;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.net.wifi.WifiConfiguration;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.google.zxing.BarcodeFormat;
@@ -35,9 +28,6 @@ import com.tdp.protoscan.database.WifiNetworkContract;
 import com.tdp.protoscan.database.WifiNetworksDB;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import io.paperdb.Paper;
 
 public class RedesGuardadasFragment extends Fragment {
 
@@ -61,14 +51,12 @@ public class RedesGuardadasFragment extends Fragment {
     }
 
     public static RedesGuardadasFragment newInstance() {
-        RedesGuardadasFragment fragment = new RedesGuardadasFragment();
-        return fragment;
+        return new RedesGuardadasFragment();
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_redes_guardadas, container, false);
-        return rootView;
+        return inflater.inflate(R.layout.fragment_redes_guardadas, container, false);
     }
 
     @Override

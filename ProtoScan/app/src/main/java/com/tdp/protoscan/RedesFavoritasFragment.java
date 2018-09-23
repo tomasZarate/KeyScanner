@@ -1,6 +1,5 @@
 package com.tdp.protoscan;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -24,7 +23,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.tdp.protoscan.database.FavsNetworksDB;
 import com.tdp.protoscan.database.WifiNetworkContract;
-import com.tdp.protoscan.database.WifiNetworksDB;
 
 import java.util.ArrayList;
 

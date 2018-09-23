@@ -7,17 +7,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.hardware.Camera;
 import android.location.LocationManager;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -25,17 +22,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.view.Surface;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.CommonStatusCodes;
-import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.tdp.protoscan.OCR.OcrCaptureActivity;
 import com.tdp.protoscan.database.WifiNetworkContract;
@@ -114,15 +107,6 @@ public class EscanearRedesFragment extends Fragment {
         mDbHelper = new WifiNetworksDB(getActivity().getApplicationContext());
 
         actualizarLista();
-        /*final Handler hand = new Handler();
-        Runnable hilo = new Runnable() {
-            @Override
-            public void run() {
-                actualizarLista();
-                hand.postDelayed(this,1000);
-            }
-        };
-        hand.postDelayed(hilo,1000);*/
     }
 
     @Override
@@ -349,10 +333,6 @@ public class EscanearRedesFragment extends Fragment {
 
                     if(!existeEnBD(ssid)) {
                         agregar(ssid, pass);
-
-                        /*getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-                        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-                        */
                     }
                     return true;
                 }
