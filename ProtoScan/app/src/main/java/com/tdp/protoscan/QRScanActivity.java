@@ -198,4 +198,27 @@ public class QRScanActivity extends AppCompatActivity {
         }
 
     }
+
+    /**
+     * Stops the camera.
+     */
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (cameraSource != null) {
+            cameraSource.stop();
+        }
+    }
+
+    /**
+     * Releases the resources associated with the camera source, the associated detectors, and the
+     * rest of the processing pipeline.
+     */
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (cameraSource != null) {
+            cameraSource.release();
+        }
+    }
 }

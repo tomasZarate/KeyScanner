@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -17,6 +18,7 @@ import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -249,8 +251,13 @@ public class EscanearRedesFragment extends Fragment {
     private void lanzarOCR(){
 
         Intent intent = new Intent(getActivity(), OcrCaptureActivity.class);
-        intent.putExtra(OcrCaptureActivity.AutoFocus, true);
-        intent.putExtra(OcrCaptureActivity.UseFlash, false);
+        SharedPreferences sharedPref =
+                PreferenceManager.getDefaultSharedPreferences(getContext());
+
+        boolean flash = sharedPref.getBoolean(SettingsActivity.KEY_FLASH_PREF,false);
+        boolean foco = sharedPref.getBoolean(SettingsActivity.KEY_AUTOFOCUS_PREF,true);
+        intent.putExtra(OcrCaptureActivity.AutoFocus, foco);
+        intent.putExtra(OcrCaptureActivity.UseFlash, flash);
         startActivityForResult(intent, RC_OCR_CAPTURE);
     }
 
