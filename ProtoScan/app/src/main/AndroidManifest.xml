@@ -44,7 +44,7 @@
         <activity
             android:name=".PatronActivity"
             android:label="@string/title_activity_crear_patron"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/Toolbar" />
         <activity
             android:name=".SettingsActivity"
             android:parentActivityName=".MainActivity"
