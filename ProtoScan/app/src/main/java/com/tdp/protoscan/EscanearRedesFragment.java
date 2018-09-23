@@ -15,6 +15,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -328,14 +329,21 @@ public class EscanearRedesFragment extends Fragment {
             if(id == i.networkId) {
                 wifiManager.disconnect();
                 wifiManager.enableNetwork(i.networkId, true);
-                boolean conecto = wifiManager.reconnect();
-                if(conecto && i.status==0){
+                wifiManager.reconnect();
 
-                    if(!existeEnBD(ssid)) {
-                        agregar(ssid, pass);
+                try {
+                    Thread.sleep(3000);
+                    boolean conecto = wifiManager.getConnectionInfo()!=null;
+                    if(conecto && i.status==0){
+                        if(!existeEnBD(ssid)) {
+                            agregar(ssid, pass);
+                        }
+                        return true;
                     }
-                    return true;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
+
             }
         }
         return false;
