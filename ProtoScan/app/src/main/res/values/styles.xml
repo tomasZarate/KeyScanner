@@ -8,20 +8,15 @@
     </style>
 
     <style name="miTema" parent="Theme.AppCompat">
-
-        <item name="android:colorBackground">@android:color/background_light</item>
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorAccent">@color/secondaryColor</item>
+        <item name="colorPrimary">@color/primaryLightColor</item>
         <item name="colorPrimaryDark">@color/primaryDarkColor</item>
-        <item name="android:textColorPrimary">@android:color/background_light</item>
-        <item name="android:textColorPrimaryInverse">@color/primaryTextColor</item>
-        <item name="android:colorForeground">@android:color/background_light</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
 
     <style name="Toolbar" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/primaryLightColor</item>
+        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
