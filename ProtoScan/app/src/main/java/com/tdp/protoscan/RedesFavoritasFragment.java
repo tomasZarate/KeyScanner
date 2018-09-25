@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -117,8 +119,7 @@ public class RedesFavoritasFragment extends Fragment {
         lvRedes.setAdapter(adaptador);
 
         mDbHelper = new FavsNetworksDB(getActivity().getApplicationContext());
-
-        imagenqr= getActivity().findViewById(R.id.qrImage);
+        
         cargarRedesFavoritas();
     }
 
@@ -217,13 +218,22 @@ public class RedesFavoritasFragment extends Fragment {
 
         try {
             Bitmap bitmap;
-
             bitmap = TextToImageEncode(redActual.getPassword());
 
-            imagenqr.setImageBitmap(bitmap);
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            final View imagenqr = inflater.inflate(R.layout.layout_qr_image,null);
+
+            Drawable d = new BitmapDrawable(getResources(), bitmap);
+            imagenqr.setBackground(d);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setView(imagenqr);
+            //AlertDialog qrAlert = builder.create();
+            //qrAlert.getWindow().setLayout(QRcodeWidth,QRcodeWidth);
+            builder.show();
         } catch (WriterException e) {
             e.printStackTrace();
         }
+
 
     }
 

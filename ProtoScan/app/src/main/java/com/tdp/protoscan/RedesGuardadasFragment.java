@@ -31,8 +31,6 @@ import java.util.ArrayList;
 
 public class RedesGuardadasFragment extends Fragment {
 
-    protected Button btnCambiarPatron;
-
     protected ArrayList<ElementoBBDD> listaBBDD; //Lista con password
     protected DataBaseAdapter adaptador;
     private ListView lvRedes;
