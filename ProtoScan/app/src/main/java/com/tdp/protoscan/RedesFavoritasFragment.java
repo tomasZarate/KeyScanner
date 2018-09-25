@@ -119,7 +119,7 @@ public class RedesFavoritasFragment extends Fragment {
         lvRedes.setAdapter(adaptador);
 
         mDbHelper = new FavsNetworksDB(getActivity().getApplicationContext());
-        
+
         cargarRedesFavoritas();
     }
 
